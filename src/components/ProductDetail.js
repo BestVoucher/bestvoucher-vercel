@@ -4,6 +4,7 @@ import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { useAuth } from '../context/AuthContext';
 import { db } from '../firebase'; // Importa Firestore
 import { collection, addDoc } from 'firebase/firestore'; // Importa le funzioni necessarie per Firestore
+import QRCode from 'qrcode.react'; // Per generare il QR code
 import '../ProductDetail.css';
 
 function ProductDetail({ products }) {
@@ -12,27 +13,33 @@ function ProductDetail({ products }) {
   const [errorMessage, setErrorMessage] = React.useState('');
   const navigate = useNavigate(); // Per reindirizzare l'utente dopo l'ordine
 
-  // Verifica se products è definito prima di usare .find()
   if (!products) {
-    return <p>Caricamento in corso...</p>; 
+    return <p>Caricamento in corso...</p>;
   }
 
   const product = products.find(p => p.id === productId);
 
-  // Verifica che il prodotto esista
   if (!product) {
     return <p>Prodotto non trovato</p>;
   }
 
   const showPayPalButton = currentUser && (!userData?.companyName);
 
-  // Funzione per generare un numero d'ordine unico
+  // Funzione per generare un codice alfanumerico casuale
+  const generateRandomCode = (length = 15) => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  };
+
   const generateOrderNumber = () => {
     const randomNumber = Math.floor(10000 + Math.random() * 90000); // Genera un numero casuale a 5 cifre
     return `BV${randomNumber}`;
   };
 
-  // Funzione per salvare l'ordine su Firestore
   const saveOrderToFirestore = async (orderData) => {
     try {
       await addDoc(collection(db, 'orders'), orderData);
@@ -42,9 +49,19 @@ function ProductDetail({ products }) {
     }
   };
 
+  const saveQRCodeToFirestore = async (qrCodeData) => {
+    try {
+      await addDoc(collection(db, 'newqrcodes'), qrCodeData);
+    } catch (error) {
+      console.error("Errore durante la registrazione del codice QR su Firestore:", error);
+      throw new Error("Errore durante la registrazione del codice QR.");
+    }
+  };
+
   const handleOrderCompletion = async (details) => {
     try {
       const orderNumber = generateOrderNumber();
+      const randomCode = generateRandomCode(); // Genera il codice casuale
       const orderData = {
         orderNumber,
         email: currentUser.email,
@@ -58,8 +75,17 @@ function ProductDetail({ products }) {
       // Salva l'ordine su Firestore
       await saveOrderToFirestore(orderData);
 
-      // Reindirizza l'utente alla pagina di riepilogo dell'ordine
-      navigate(`/order-summary/${orderNumber}`, { state: orderData });
+      // Salva il codice QR su Firestore
+      const qrCodeData = {
+        code: randomCode,
+        userId: currentUser.uid,
+        companyId: product.userId,
+        createdAt: new Date().toISOString(),
+      };
+      await saveQRCodeToFirestore(qrCodeData);
+
+      // Reindirizza l'utente alla pagina di riepilogo dell'ordine, includendo il codice QR
+      navigate(`/order-summary/${orderNumber}`, { state: { ...orderData, qrCode: randomCode } });
     } catch (error) {
       setErrorMessage("Si è verificato un errore durante la registrazione dell'ordine.");
     }
