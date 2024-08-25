@@ -1,0 +1,132 @@
+/* Stili di base per il menu di navigazione */
+.navbar {
+  background-color: #333;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%; /* Assicura che la navbar occupi l'intera larghezza */
+  box-sizing: border-box; /* Include padding e bordi nella larghezza */
+}
+
+.navbar-logo-container {
+  margin-right: auto; /* Posiziona l'icona a sinistra */
+}
+
+.navbar-menu-container {
+  display: flex;
+  justify-content: center;
+  flex: 1; /* Fa sì che il menu occupi il resto dello spazio centrale */
+}
+
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item {
+  margin: 0 15px;
+}
+
+.navbar-item a, .logout-button {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  position: relative;
+  padding-bottom: 5px;
+  background: none; /* Rimuove lo sfondo del pulsante */
+  border: none; /* Rimuove il bordo del pulsante */
+  cursor: pointer; /* Mantiene il puntatore del mouse come per un link */
+  transition: color 0.3s ease;
+}
+
+.navbar-item a::before, .logout-button::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-item a:hover::before, .logout-button:hover::before {
+  visibility: visible;
+  transform: scaleX(1);
+}
+
+.navbar-item a:hover, .logout-button:hover {
+  color: #ff9800;
+}
+
+/* Stile per l'icona nella navbar */
+.navbar-logo {
+  width: 40px; /* Larghezza dell'icona */
+  height: auto; /* Mantiene le proporzioni dell'immagine */
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+/* Posiziona il pulsante Logout tutto a destra */
+.navbar-logout-container {
+  margin-left: auto; /* Sposta il logout tutto a destra */
+}
+
+.product-card img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover; /* Mantiene il rapporto d'aspetto ritagliando l'immagine se necessario */
+  border-radius: 8px; /* Aggiunge un bordo arrotondato opzionale */
+  margin-bottom: 15px;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.1); /* Aumenta leggermente la dimensione al passaggio del mouse */
+}
+
+.products-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.product-card {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+}
+
+.product-card h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
+}
+
+.product-card p {
+  font-size: 1em;
+  color: #555;
+}
+
+.product-card a {
+  text-decoration: none;
+  color: inherit; /* Mantiene il colore del testo definito in precedenza */
+}
+
+.product-card a:hover {
+  text-decoration: none;
+  color: inherit;
+}
