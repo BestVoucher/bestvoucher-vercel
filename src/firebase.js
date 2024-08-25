@@ -16,6 +16,9 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
+// Debugging log to ensure the file is being loaded correctly
+console.log("Firebase configuration:", firebaseConfig);
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
