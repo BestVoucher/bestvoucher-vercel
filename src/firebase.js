@@ -19,10 +19,21 @@ const firebaseConfig = {
 // Debugging log to ensure the file is being loaded correctly
 console.log("Firebase configuration:", firebaseConfig);
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const storage = getStorage(app);
+try {
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  console.log("Firebase app initialized:", app);
 
-export { auth, db, storage };
+  const auth = getAuth(app);
+  console.log("Firebase Auth initialized:", auth);
+
+  const db = getFirestore(app);
+  console.log("Firestore DB initialized:", db);
+
+  const storage = getStorage(app);
+  console.log("Firebase Storage initialized:", storage);
+
+  export { auth, db, storage };
+} catch (error) {
+  console.error("Error initializing Firebase services:", error);
+}
