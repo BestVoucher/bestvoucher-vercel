@@ -75,11 +75,12 @@ function ProductDetail({ products }) {
       // Salva l'ordine su Firestore
       await saveOrderToFirestore(orderData);
 
-      // Salva il codice QR su Firestore
+      // Salva il codice QR su Firestore, includendo il nome del documento del prodotto
       const qrCodeData = {
         code: randomCode,
         userId: currentUser.uid,
         companyId: product.userId,
+        productDocName: product.id, // Nome del documento corrispondente al prodotto
         createdAt: new Date().toISOString(),
       };
       await saveQRCodeToFirestore(qrCodeData);
