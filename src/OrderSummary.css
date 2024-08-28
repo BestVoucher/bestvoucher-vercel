@@ -1,0 +1,60 @@
+.order-summary-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .order-summary-box {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .order-summary-box p {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  
+  .qrcode-section {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .order-summary-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .order-summary-actions button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .order-summary-actions button:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 600px) {
+    .order-summary-actions {
+      flex-direction: column;
+    }
+  
+    .order-summary-actions button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }

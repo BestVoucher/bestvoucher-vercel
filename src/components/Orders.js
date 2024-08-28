@@ -35,7 +35,7 @@ function Orders() {
 
   return (
     <div className="orders-page">
-      <h2>I tuoi ordini</h2>
+      <h2>I miei ordini</h2>
       <ul className="orders-list">
         {orders.map(order => (
           <li key={order.id} className="order-item">

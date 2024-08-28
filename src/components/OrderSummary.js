@@ -1,7 +1,8 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { jsPDF } from 'jspdf';
-import QRCode from 'qrcode.react'; // Importa il generatore di QR code
+import QRCode from 'qrcode.react';
+import '../OrderSummary.css'; // File CSS per lo styling
 
 function OrderSummary() {
   const location = useLocation();
@@ -30,17 +31,21 @@ function OrderSummary() {
   };
 
   return (
-    <div>
+    <div className="order-summary-page">
       <h1>Riepilogo dell'ordine</h1>
-      <p>Numero d'ordine: {orderData.orderNumber}</p>
-      <p>Prodotto: {orderData.productTitle}</p>
-      <p>Prezzo: €{orderData.price}</p>
-      <div>
-        <h3>Codice QR:</h3>
-        <QRCode id="qrcode" value={orderData.qrCode} size={256} />
-        <button onClick={handleDownloadQRCode}>Scarica QR Code</button>
+      <div className="order-summary-box">
+        <p><strong>Numero d'ordine:</strong> {orderData.orderNumber}</p>
+        <p><strong>Prodotto:</strong> {orderData.productTitle}</p>
+        <p><strong>Prezzo:</strong> €{orderData.price}</p>
+        <div className="qrcode-section">
+          <h3>Codice QR:</h3>
+          <QRCode id="qrcode" value={orderData.qrCode} size={256} />
+        </div>
       </div>
-      <button onClick={handleDownloadPDF}>Scarica PDF</button>
+      <div className="order-summary-actions">
+        <button onClick={handleDownloadQRCode}>Scarica QR Code</button>
+        <button onClick={handleDownloadPDF}>Scarica PDF</button>
+      </div>
     </div>
   );
 }
