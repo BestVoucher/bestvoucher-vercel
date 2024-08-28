@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { PayPalScriptProvider, PayPalButtons, FUNDING } from '@paypal/react-paypal-js';
 import { useAuth } from '../context/AuthContext';
 import { db } from '../firebase'; // Importa Firestore
 import { collection, addDoc } from 'firebase/firestore'; // Importa le funzioni necessarie per Firestore
@@ -106,67 +106,69 @@ function ProductDetail({ products }) {
         </p>
       )}
 
-<PayPalScriptProvider options={{ "client-id": "Af7Y9iWFFwOV3tHl8xMQz1_FG6927jMUWk92Ol1cSowunUntDpNgeYgacRSa4OG-jozaNeWDBOL8igGk", currency: "EUR" }}>
-  {showPayPalButton && (
-    <>
-      <PayPalButtons
-        style={{ layout: "vertical" }}
-        createOrder={(data, actions) => {
-          return actions.order.create({
-            purchase_units: [{
-              amount: {
-                value: product.price.toString(),
-                currency_code: "EUR"
-              }
-            }]
-          });
-        }}
-        onApprove={async (data, actions) => {
-          try {
-            const details = await actions.order.capture();
-            await handleOrderCompletion(details); // Gestione dell'ordine completato
-          } catch (err) {
-            console.error('Errore durante il pagamento:', err);
-            setErrorMessage('Si è verificato un errore durante il pagamento.');
-          }
-        }}
-        onError={(err) => {
-          console.error('Errore durante il pagamento:', err);
-          setErrorMessage('Si è verificato un errore durante il pagamento.');
-        }}
-      />
+      <PayPalScriptProvider options={{ "client-id": "Af7Y9iWFFwOV3tHl8xMQz1_FG6927jMUWk92Ol1cSowunUntDpNgeYgacRSa4OG-jozaNeWDBOL8igGk", currency: "EUR" }}>
+        {showPayPalButton && (
+          <>
+            {/* Pulsante PayPal */}
+            <PayPalButtons
+              fundingSource={FUNDING.PAYPAL}
+              style={{ layout: "vertical" }}
+              createOrder={(data, actions) => {
+                return actions.order.create({
+                  purchase_units: [{
+                    amount: {
+                      value: product.price.toString(),
+                      currency_code: "EUR"
+                    }
+                  }]
+                });
+              }}
+              onApprove={async (data, actions) => {
+                try {
+                  const details = await actions.order.capture();
+                  await handleOrderCompletion(details); // Gestione dell'ordine completato
+                } catch (err) {
+                  console.error('Errore durante il pagamento:', err);
+                  setErrorMessage('Si è verificato un errore durante il pagamento.');
+                }
+              }}
+              onError={(err) => {
+                console.error('Errore durante il pagamento:', err);
+                setErrorMessage('Si è verificato un errore durante il pagamento.');
+              }}
+            />
 
-      {/* Pulsante per le carte di credito/debito */}
-      <PayPalButtons
-        fundingSource={window.paypal.FUNDING.CARD} // Abilita le carte di credito
-        style={{ layout: "vertical" }}
-        createOrder={(data, actions) => {
-          return actions.order.create({
-            purchase_units: [{
-              amount: {
-                value: product.price.toString(),
-                currency_code: "EUR"
-              }
-            }]
-          });
-        }}
-        onApprove={async (data, actions) => {
-          try {
-            const details = await actions.order.capture();
-            await handleOrderCompletion(details); // Gestione dell'ordine completato
-          } catch (err) {
-            console.error('Errore durante il pagamento con carta:', err);
-            setErrorMessage('Si è verificato un errore durante il pagamento con carta.');
-          }
-        }}
-        onError={(err) => {
-          console.error('Errore durante il pagamento con carta:', err);
-          setErrorMessage('Si è verificato un errore durante il pagamento con carta.');
-        }}
-      />
-    </>
-  )}
-</PayPalScriptProvider>
+            {/* Pulsante per le carte di credito/debito */}
+            <PayPalButtons
+              fundingSource={FUNDING.CARD}
+              style={{ layout: "vertical" }}
+              createOrder={(data, actions) => {
+                return actions.order.create({
+                  purchase_units: [{
+                    amount: {
+                      value: product.price.toString(),
+                      currency_code: "EUR"
+                    }
+                  }]
+                });
+              }}
+              onApprove={async (data, actions) => {
+                try {
+                  const details = await actions.order.capture();
+                  await handleOrderCompletion(details); // Gestione dell'ordine completato
+                } catch (err) {
+                  console.error('Errore durante il pagamento con carta:', err);
+                  setErrorMessage('Si è verificato un errore durante il pagamento con carta.');
+                }
+              }}
+              onError={(err) => {
+                console.error('Errore durante il pagamento con carta:', err);
+                setErrorMessage('Si è verificato un errore durante il pagamento con carta.');
+              }}
+            />
+          </>
+        )}
+      </PayPalScriptProvider>
     </div>
   );
 }
