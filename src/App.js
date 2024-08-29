@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'; // Importa Link qui
 import Register from './components/Register';
 import Login from './components/Login';
 import PersonalArea from './components/PersonalArea';
