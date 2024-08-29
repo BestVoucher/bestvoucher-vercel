@@ -96,7 +96,7 @@ function ProductDetail({ products }) {
     <div className="product-detail">
       <img src={product.imageUrl} alt={product.title} className="product-detail-image" />
       <h2>{product.title}</h2>
-      <p>{product.description}</p>
+      <p style={{ whiteSpace: 'pre-wrap' }}>{product.description}</p> {/* Formattazione del testo */}
       <p>Prezzo: €{product.price}</p>
       <p>Venduto da: {product.companyName}</p>
 

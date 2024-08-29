@@ -70,3 +70,9 @@
     font-size: 1rem;
     margin-top: 20px;
   }
+
+  .form-textarea {
+    white-space: pre-wrap; /* Opzionale: preserva la formattazione nel campo di input */
+    height: 150px;
+    resize: vertical;
+  }
