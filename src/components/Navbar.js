@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
-import { auth } from './firebase';
+import { useAuth } from '../context/AuthContext';
+import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
 import '../Navbar.css';
-import logo from './assets/logo.png';
+import logo from '../assets/logo.png';
 
 function Navbar() {
   const { currentUser, userData } = useAuth();
