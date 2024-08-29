@@ -4,7 +4,7 @@
   padding: 10px;
   display: flex;
   align-items: center;
-  position: relative;
+  justify-content: space-between; /* Distribuisce gli elementi su tutta la larghezza */
   width: 100%;
   box-sizing: border-box; /* Include padding e bordi nella larghezza */
   z-index: 1000;
@@ -125,6 +125,7 @@
   border: none;
   color: white;
   cursor: pointer;
+  margin-left: auto; /* Sposta il toggle a destra */
 }
 
 /* Mostra il menu a tendina e il pulsante su dispositivi mobili */
