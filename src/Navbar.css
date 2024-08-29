@@ -78,77 +78,86 @@
   margin-left: auto; /* Sposta il logout tutto a destra */
 }
 
-/* Navbar per schermo grande (desktop) */
-.navbar-menu-dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  right: 10px;
-  background-color: #333;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  width: 200px;
-  border-radius: 8px;
+/* Stili per il menu a tendina mobile */
+.navbar-mobile-menu {
+  display: none; /* Nascondi il menu mobile per default */
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
-.navbar-menu-dropdown.open {
-  display: block;
-}
-
-.navbar-menu-dropdown ul {
+.navbar-mobile-dropdown {
   list-style: none;
   margin: 0;
-  padding: 10px 0;
-}
-
-.navbar-menu-dropdown ul li {
-  padding: 10px;
+  padding: 0;
+  background-color: #333;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  left: 0;
   text-align: center;
+  z-index: 999;
 }
 
-.navbar-menu-dropdown ul li a {
+.navbar-mobile-dropdown .navbar-item {
+  padding: 15px 0;
+  border-bottom: 1px solid #444;
+}
+
+.navbar-mobile-dropdown .navbar-item:last-child {
+  border-bottom: none;
+}
+
+.navbar-mobile-dropdown .navbar-item a {
   color: white;
-  text-decoration: none;
   font-size: 18px;
+  text-decoration: none;
 }
 
-.navbar-menu-dropdown ul li a:hover {
+.navbar-mobile-dropdown .navbar-item a:hover {
   color: #ff9800;
 }
 
-/* Pulsante di apertura del menu mobile */
-.navbar-toggle {
-  display: none;
-  background-color: #333;
+/* Stile per il pulsante di apertura del menu mobile */
+.menu-toggle-button {
+  font-size: 24px;
+  background: none;
   border: none;
   color: white;
-  padding: 10px;
-  font-size: 18px;
   cursor: pointer;
 }
 
 /* Mostra il menu a tendina e il pulsante su dispositivi mobili */
 @media (max-width: 768px) {
   .navbar-menu-container {
-    display: none;
+    display: none; /* Nasconde il menu standard su mobile */
   }
 
-  .navbar-toggle {
-    display: block;
-    margin-left: auto;
+  .navbar-mobile-menu {
+    display: flex; /* Mostra il menu mobile */
+  }
+
+  .navbar-mobile-dropdown {
+    display: none; /* Nasconde il dropdown per default */
+  }
+
+  .navbar-mobile-dropdown.open {
+    display: block; /* Mostra il dropdown quando il menu è aperto */
   }
 }
 
+/* Stile per l'icona della navbar su hover */
+.navbar-logo:hover {
+  transform: scale(1.1); /* Aumenta leggermente la dimensione al passaggio del mouse */
+}
+
+/* Stili per le card dei prodotti */
 .product-card img {
   width: 200px;
   height: 200px;
   object-fit: cover; /* Mantiene il rapporto d'aspetto ritagliando l'immagine se necessario */
   border-radius: 8px; /* Aggiunge un bordo arrotondato opzionale */
   margin-bottom: 15px;
-}
-
-.navbar-logo:hover {
-  transform: scale(1.1); /* Aumenta leggermente la dimensione al passaggio del mouse */
 }
 
 .products-list {
