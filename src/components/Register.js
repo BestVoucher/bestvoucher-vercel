@@ -19,14 +19,17 @@ function Register() {
     piva: '',  // Aggiungi P.IVA
     address: '',
     postalCode: '',
-    city: ''
+    city: '',
+    acceptedTerms: false, // Nuovo campo per l'accettazione dei termini
   });
 
   const [message, setMessage] = useState(null);
 
-  const { email, password, confirmPassword, role, firstName, lastName, birthDate, gender, companyName, piva, address, postalCode, city } = formData;
+  const { email, password, confirmPassword, role, firstName, lastName, birthDate, gender, companyName, piva, address, postalCode, city, acceptedTerms } = formData;
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onCheckboxChange = e => setFormData({ ...formData, [e.target.name]: e.target.checked });
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -47,28 +50,40 @@ function Register() {
       return;
     }
 
+    if (!acceptedTerms) {
+      setMessage({ type: 'error', text: 'Devi accettare i termini e le condizioni per registrarti.' });
+      return;
+    }
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+      const timestamp = new Date().toISOString();
+
+      const userData = {
+        email: user.email,
+        role: role,
+        acceptedTerms: true,
+        termsAcceptedAt: timestamp, // Data e ora dell'accettazione dei termini
+      };
 
       if (role === 'user') {
         await setDoc(doc(db, 'users', user.uid), {
-          email: user.email,
-          role: role,
+          ...userData,
           firstName: firstName,
           lastName: lastName,
           birthDate: birthDate,
-          gender: gender
+          gender: gender,
         });
       } else if (role === 'company') {
         await setDoc(doc(db, 'companyRequests', user.uid), {
-          email: user.email,
+          ...userData,
           companyName: companyName,
           piva: piva,  // Salva P.IVA su Firestore
           address: address,
           postalCode: postalCode,
           city: city,
-          status: 'pending'
+          status: 'pending',
         });
       }
 
@@ -202,6 +217,19 @@ function Register() {
           required
           className="register-input"
         />
+
+        <div className="terms-container">
+          <input
+            type="checkbox"
+            name="acceptedTerms"
+            checked={acceptedTerms}
+            onChange={onCheckboxChange}
+            required
+          />
+          <label>
+            Ho letto e accetto i <Link to="/terms">termini e condizioni</Link>
+          </label>
+        </div>
 
         <button type="submit" className="register-button">Registrati</button>
 

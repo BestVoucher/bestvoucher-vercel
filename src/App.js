@@ -58,6 +58,7 @@ function App() {
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/order-summary/:orderNumber" element={<OrderSummary />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/terms" element={<Terms />} />
             <Route path="/received-orders" element={<ReceivedOrders />} /> {/* Route per la nuova pagina */}
             <Route path="/" element={
   <div className="App">
