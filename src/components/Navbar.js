@@ -51,35 +51,33 @@ function Navbar() {
           <button className="menu-toggle-button" onClick={toggleMenu}>
             ☰
           </button>
-          {menuOpen && (
-            <ul className="navbar-mobile-dropdown">
-              <li className="navbar-item"><Link to="/" onClick={toggleMenu}>Home</Link></li>
-              <li className="navbar-item"><Link to="/personal-area" onClick={toggleMenu}>Profilo</Link></li>
+          <ul className={`navbar-mobile-dropdown ${menuOpen ? 'open' : ''}`}>
+            <li className="navbar-item"><Link to="/" onClick={toggleMenu}>Home</Link></li>
+            <li className="navbar-item"><Link to="/personal-area" onClick={toggleMenu}>Profilo</Link></li>
               
-              {userData?.role === 'admin' && (
-                <li className="navbar-item"><Link to="/admin-dashboard" onClick={toggleMenu}>Dashboard Admin</Link></li>
-              )}
+            {userData?.role === 'admin' && (
+              <li className="navbar-item"><Link to="/admin-dashboard" onClick={toggleMenu}>Dashboard Admin</Link></li>
+            )}
 
-              {userData?.role === 'company' && userData?.status === 'approved' && (
-                <>
-                  <li className="navbar-item"><Link to="/sell-product" onClick={toggleMenu}>Vendi</Link></li>
-                  <li className="navbar-item"><Link to="/received-orders" onClick={toggleMenu}>Ordini ricevuti</Link></li>
-                </>
-              )}
+            {userData?.role === 'company' && userData?.status === 'approved' && (
+              <>
+                <li className="navbar-item"><Link to="/sell-product" onClick={toggleMenu}>Vendi</Link></li>
+                <li className="navbar-item"><Link to="/received-orders" onClick={toggleMenu}>Ordini ricevuti</Link></li>
+              </>
+            )}
 
-              {userData?.role === 'user' && (
-                <li className="navbar-item"><Link to="/orders" onClick={toggleMenu}>Ordini</Link></li>
-              )}
+            {userData?.role === 'user' && (
+              <li className="navbar-item"><Link to="/orders" onClick={toggleMenu}>Ordini</Link></li>
+            )}
 
-              {!currentUser && (
-                <li className="navbar-item"><Link to="/login" onClick={toggleMenu}>Login</Link></li>
-              )}
+            {!currentUser && (
+              <li className="navbar-item"><Link to="/login" onClick={toggleMenu}>Login</Link></li>
+            )}
 
-              {currentUser && (
-                <li className="navbar-item"><button onClick={() => { handleLogout(); toggleMenu(); }} className="logout-button">Logout</button></li>
-              )}
-            </ul>
-          )}
+            {currentUser && (
+              <li className="navbar-item"><button onClick={() => { handleLogout(); toggleMenu(); }} className="logout-button">Logout</button></li>
+            )}
+          </ul>
         </div>
       ) : (
         <div className="navbar-menu-container">
