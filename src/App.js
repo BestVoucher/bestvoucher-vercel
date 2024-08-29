@@ -7,6 +7,7 @@ import OrderSummary from './components/OrderSummary';
 import SellProduct from './components/SellProduct';
 import ProductDetail from './components/ProductDetail';
 import Orders from './components/Orders';
+import Terms from './components/Terms'
 import AdminDashboard from './components/AdminDashboard';
 import ReceivedOrders from './components/ReceivedOrders';  // Importa la nuova pagina "Ordini Ricevuti"
 import { AuthProvider, useAuth } from './context/AuthContext';
