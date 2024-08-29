@@ -113,7 +113,7 @@ function Navbar() {
       <div className="navbar-menu-container">
         <ul className="navbar-menu">
           <li className="navbar-item"><Link to="/">Home</Link></li>
-          <li className="navbar-item"><Link to="/personal-area">Area Personale</Link></li>
+          <li className="navbar-item"><Link to="/personal-area">Area clienti</Link></li>
           
           {/* Mostra il link Admin Dashboard solo se l'utente è un admin */}
           {userData?.role === 'admin' && (
@@ -130,7 +130,7 @@ function Navbar() {
 
           {/* Mostra il link "Ordini Effettuati" solo se l'utente è loggato come utente (non azienda) */}
           {userData?.role === 'user' && (
-            <li className="navbar-item"><Link to="/orders">I miei ordini</Link></li>
+            <li className="navbar-item"><Link to="/orders">Ordini</Link></li>
           )}
 
           {/* Mostra il link "Login" solo se l'utente non è loggato */}
