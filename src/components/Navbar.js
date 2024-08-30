@@ -74,51 +74,49 @@ function Navbar() {
           <button className="menu-toggle-button" onClick={toggleMenu}>
             ☰
           </button>
-          {menuOpen && (
-            <ul className="navbar-mobile-dropdown">
+          <ul className={`navbar-mobile-dropdown ${menuOpen ? 'open' : ''}`}>
+            <li className="navbar-item">
+              <NavLink to="/" onClick={toggleMenu} activeClassName="active">Home</NavLink>
+            </li>
+            <li className="navbar-item">
+              <NavLink to="/personal-area" onClick={toggleMenu} activeClassName="active">Profilo</NavLink>
+            </li>
+
+            {userData?.role === 'admin' && (
               <li className="navbar-item">
-                <NavLink to="/" onClick={toggleMenu} activeClassName="active">Home</NavLink>
+                <NavLink to="/admin-dashboard" onClick={toggleMenu} activeClassName="active">Dashboard Admin</NavLink>
               </li>
+            )}
+
+            {userData?.role === 'company' && userData?.status === 'approved' && (
+              <>
+                <li className="navbar-item">
+                  <NavLink to="/sell-product" onClick={toggleMenu} activeClassName="active">Vendi</NavLink>
+                </li>
+                <li className="navbar-item">
+                  <NavLink to="/received-orders" onClick={toggleMenu} activeClassName="active">Ordini ricevuti</NavLink>
+                </li>
+              </>
+            )}
+
+            {userData?.role === 'user' && (
               <li className="navbar-item">
-                <NavLink to="/personal-area" onClick={toggleMenu} activeClassName="active">Profilo</NavLink>
+                <NavLink to="/orders" onClick={toggleMenu} activeClassName="active">Ordini</NavLink>
               </li>
+            )}
 
-              {userData?.role === 'admin' && (
-                <li className="navbar-item">
-                  <NavLink to="/admin-dashboard" onClick={toggleMenu} activeClassName="active">Dashboard Admin</NavLink>
-                </li>
-              )}
+            {!currentUser && (
+              <li className="navbar-item">
+                <NavLink to="/login" onClick={toggleMenu} activeClassName="active">Login</NavLink>
+              </li>
+            )}
 
-              {userData?.role === 'company' && userData?.status === 'approved' && (
-                <>
-                  <li className="navbar-item">
-                    <NavLink to="/sell-product" onClick={toggleMenu} activeClassName="active">Vendi</NavLink>
-                  </li>
-                  <li className="navbar-item">
-                    <NavLink to="/received-orders" onClick={toggleMenu} activeClassName="active">Ordini ricevuti</NavLink>
-                  </li>
-                </>
-              )}
-
-              {userData?.role === 'user' && (
-                <li className="navbar-item">
-                  <NavLink to="/orders" onClick={toggleMenu} activeClassName="active">Ordini</NavLink>
-                </li>
-              )}
-
-              {!currentUser && (
-                <li className="navbar-item">
-                  <NavLink to="/login" onClick={toggleMenu} activeClassName="active">Login</NavLink>
-                </li>
-              )}
-
-              {currentUser && (
-                <li className="navbar-item">
-                  <button onClick={() => { handleLogout(); toggleMenu(); }} className="logout-button">Logout</button>
-                </li>
-              )}
-            </ul>
-          )}
+            {currentUser && (
+              <li className="navbar-item">
+                <button onClick={() => { handleLogout(); toggleMenu(); }} className="logout-button">Logout</button>
+              </li>
+            )}
+          </ul>
         </div>
       ) : (
         <div className="navbar-menu-container">

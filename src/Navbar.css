@@ -159,57 +159,6 @@
   transform: scale(1.1);
 }
 
-/* Stili per le card dei prodotti */
-.product-card img {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-.products-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.product-card {
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  margin: 10px;
-  max-width: 300px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-}
-
-.product-card:hover {
-  transform: scale(1.05);
-}
-
-.product-card h2 {
-  font-size: 1.5em;
-  margin: 10px 0;
-}
-
-.product-card p {
-  font-size: 1em;
-  color: #555;
-}
-
-.product-card a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.product-card a:hover {
-  text-decoration: none;
-  color: inherit;
-}
-
 .navbar-item .active {
   color: #ff9800;
   border-bottom: 2px solid #ff9800;
