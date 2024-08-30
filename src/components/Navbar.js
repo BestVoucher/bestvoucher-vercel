@@ -94,7 +94,7 @@ function Navbar() {
                   <NavLink to="/sell-product" onClick={toggleMenu} activeClassName="active">Vendi</NavLink>
                 </li>
                 <li className="navbar-item">
-                  <NavLink to="/received-orders" onClick={toggleMenu} activeClassName="active">Ordini ricevuti</NavLink>
+                  <NavLink to="/received-orders" onClick={toggleMenu} activeClassName="active">Ordini</NavLink>
                 </li>
               </>
             )}
@@ -105,17 +105,13 @@ function Navbar() {
               </li>
             )}
 
-            {!currentUser && (
-              <li className="navbar-item">
-                <NavLink to="/login" onClick={toggleMenu} activeClassName="active">Login</NavLink>
-              </li>
-            )}
-
-            {currentUser && (
-              <li className="navbar-item">
+            <li className="navbar-item">
+              {currentUser ? (
                 <button onClick={() => { handleLogout(); toggleMenu(); }} className="logout-button">Logout</button>
-              </li>
-            )}
+              ) : (
+                <NavLink to="/login" onClick={toggleMenu} activeClassName="active">Login</NavLink>
+              )}
+            </li>
           </ul>
         </div>
       ) : (
@@ -138,17 +134,15 @@ function Navbar() {
             {userData?.role === 'user' && (
               <li className="navbar-item"><NavLink to="/orders" activeClassName="active">Ordini</NavLink></li>
             )}
-
-            {!currentUser && (
-              <li className="navbar-item"><NavLink to="/login" activeClassName="active">Login</NavLink></li>
-            )}
           </ul>
-        </div>
-      )}
 
-      {currentUser && !isMobile && (
-        <div className="navbar-logout-container">
-          <button onClick={handleLogout} className="logout-button">Logout</button>
+          <div className="navbar-logout-container">
+            {currentUser ? (
+              <button onClick={handleLogout} className="logout-button">Logout</button>
+            ) : (
+              <NavLink to="/login" activeClassName="active">Login</NavLink>
+            )}
+          </div>
         </div>
       )}
     </nav>
