@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
@@ -41,9 +41,9 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-logo-container">
-        <Link to="/">
+        <NavLink to="/">
           <img src={logo} alt="Home" className="navbar-logo" />
-        </Link>
+        </NavLink>
       </div>
 
       {isMobile ? (
@@ -51,57 +51,59 @@ function Navbar() {
           <button className="menu-toggle-button" onClick={toggleMenu}>
             ☰
           </button>
-          <ul className={`navbar-mobile-dropdown ${menuOpen ? 'open' : ''}`}>
-            <li className="navbar-item"><Link to="/" onClick={toggleMenu}>Home</Link></li>
-            <li className="navbar-item"><Link to="/personal-area" onClick={toggleMenu}>Profilo</Link></li>
+          {menuOpen && (
+            <ul className="navbar-mobile-dropdown">
+              <li className="navbar-item"><NavLink to="/" onClick={toggleMenu} activeClassName="active">Home</NavLink></li>
+              <li className="navbar-item"><NavLink to="/personal-area" onClick={toggleMenu} activeClassName="active">Profilo</NavLink></li>
               
-            {userData?.role === 'admin' && (
-              <li className="navbar-item"><Link to="/admin-dashboard" onClick={toggleMenu}>Dashboard Admin</Link></li>
-            )}
+              {userData?.role === 'admin' && (
+                <li className="navbar-item"><NavLink to="/admin-dashboard" onClick={toggleMenu} activeClassName="active">Dashboard Admin</NavLink></li>
+              )}
 
-            {userData?.role === 'company' && userData?.status === 'approved' && (
-              <>
-                <li className="navbar-item"><Link to="/sell-product" onClick={toggleMenu}>Vendi</Link></li>
-                <li className="navbar-item"><Link to="/received-orders" onClick={toggleMenu}>Ordini ricevuti</Link></li>
-              </>
-            )}
+              {userData?.role === 'company' && userData?.status === 'approved' && (
+                <>
+                  <li className="navbar-item"><NavLink to="/sell-product" onClick={toggleMenu} activeClassName="active">Vendi</NavLink></li>
+                  <li className="navbar-item"><NavLink to="/received-orders" onClick={toggleMenu} activeClassName="active">Ordini ricevuti</NavLink></li>
+                </>
+              )}
 
-            {userData?.role === 'user' && (
-              <li className="navbar-item"><Link to="/orders" onClick={toggleMenu}>Ordini</Link></li>
-            )}
+              {userData?.role === 'user' && (
+                <li className="navbar-item"><NavLink to="/orders" onClick={toggleMenu} activeClassName="active">Ordini</NavLink></li>
+              )}
 
-            {!currentUser && (
-              <li className="navbar-item"><Link to="/login" onClick={toggleMenu}>Login</Link></li>
-            )}
+              {!currentUser && (
+                <li className="navbar-item"><NavLink to="/login" onClick={toggleMenu} activeClassName="active">Login</NavLink></li>
+              )}
 
-            {currentUser && (
-              <li className="navbar-item"><button onClick={() => { handleLogout(); toggleMenu(); }} className="logout-button">Logout</button></li>
-            )}
-          </ul>
+              {currentUser && (
+                <li className="navbar-item"><button onClick={() => { handleLogout(); toggleMenu(); }} className="logout-button">Logout</button></li>
+              )}
+            </ul>
+          )}
         </div>
       ) : (
         <div className="navbar-menu-container">
           <ul className="navbar-menu">
-            <li className="navbar-item"><Link to="/">Home</Link></li>
-            <li className="navbar-item"><Link to="/personal-area">Profilo</Link></li>
+            <li className="navbar-item"><NavLink to="/" activeClassName="active">Home</NavLink></li>
+            <li className="navbar-item"><NavLink to="/personal-area" activeClassName="active">Profilo</NavLink></li>
             
             {userData?.role === 'admin' && (
-              <li className="navbar-item"><Link to="/admin-dashboard">Dashboard Admin</Link></li>
+              <li className="navbar-item"><NavLink to="/admin-dashboard" activeClassName="active">Dashboard Admin</NavLink></li>
             )}
 
             {userData?.role === 'company' && userData?.status === 'approved' && (
               <>
-                <li className="navbar-item"><Link to="/sell-product">Vendi</Link></li>
-                <li className="navbar-item"><Link to="/received-orders">Ordini ricevuti</Link></li>
+                <li className="navbar-item"><NavLink to="/sell-product" activeClassName="active">Vendi</NavLink></li>
+                <li className="navbar-item"><NavLink to="/received-orders" activeClassName="active">Ordini ricevuti</NavLink></li>
               </>
             )}
 
             {userData?.role === 'user' && (
-              <li className="navbar-item"><Link to="/orders">Ordini</Link></li>
+              <li className="navbar-item"><NavLink to="/orders" activeClassName="active">Ordini</NavLink></li>
             )}
 
             {!currentUser && (
-              <li className="navbar-item"><Link to="/login">Login</Link></li>
+              <li className="navbar-item"><NavLink to="/login" activeClassName="active">Login</NavLink></li>
             )}
           </ul>
         </div>

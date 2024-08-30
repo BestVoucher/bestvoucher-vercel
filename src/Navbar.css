@@ -202,3 +202,18 @@
   text-decoration: none;
   color: inherit;
 }
+
+.navbar-item .active {
+  color: #ff9800;
+  border-bottom: 2px solid #ff9800;
+}
+
+.navbar-item a:hover, .navbar-item .active {
+  color: #ff9800;
+}
+
+/* Assicurati che lo stile hover sia simile a quello del link attivo */
+.navbar-item a:hover::before, .logout-button:hover::before, .navbar-item .active::before {
+  visibility: visible;
+  transform: scaleX(1);
+}
