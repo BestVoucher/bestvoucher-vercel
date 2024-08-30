@@ -81,8 +81,9 @@
 /* Stili per il menu a tendina mobile */
 .navbar-mobile-menu {
   display: none;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
 }
 
@@ -135,9 +136,6 @@
 
   .navbar-mobile-menu {
     display: flex;
-    align-items: center;
-    justify-content: space-between; /* Assicura che il titolo sia centrato */
-    width: 100%;
   }
 
   .navbar-mobile-dropdown {
@@ -146,6 +144,13 @@
 
   .navbar-mobile-dropdown.open {
     display: block;
+  }
+
+  .navbar-page-title {
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    flex: 1;
   }
 }
 
@@ -217,13 +222,4 @@
 .navbar-item a:hover::before, .logout-button:hover::before, .navbar-item .active::before {
   visibility: visible;
   transform: scaleX(1);
-}
-
-/* Stile per il titolo della pagina nella navbar mobile */
-.navbar-page-title {
-  color: white;
-  font-size: 18px;
-  text-align: center;
-  flex: 1;
-  margin-left: 10px; /* Assicura che il titolo sia centrato rispetto al logo e al toggle */
 }
