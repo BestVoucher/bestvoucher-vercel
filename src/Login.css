@@ -4,7 +4,7 @@ body, html {
 }
 
 .login-container {
-  margin-top: -10px; /* Prova un margine negativo */
+  margin-top: -30px; /* Prova un margine negativo */
   display: flex;
   justify-content: center;
   align-items: center;
