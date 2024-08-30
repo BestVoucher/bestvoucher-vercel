@@ -115,35 +115,36 @@ function Navbar() {
           </ul>
         </div>
       ) : (
-        <div className="navbar-menu-container">
-          <ul className="navbar-menu">
-            <li className="navbar-item"><NavLink to="/" activeClassName="active">Home</NavLink></li>
-            <li className="navbar-item"><NavLink to="/personal-area" activeClassName="active">Profilo</NavLink></li>
+        <>
+          <div className="navbar-menu-container">
+            <ul className="navbar-menu">
+              <li className="navbar-item"><NavLink to="/" activeClassName="active">Home</NavLink></li>
+              <li className="navbar-item"><NavLink to="/personal-area" activeClassName="active">Profilo</NavLink></li>
 
-            {userData?.role === 'admin' && (
-              <li className="navbar-item"><NavLink to="/admin-dashboard" activeClassName="active">Admin</NavLink></li>
-            )}
+              {userData?.role === 'admin' && (
+                <li className="navbar-item"><NavLink to="/admin-dashboard" activeClassName="active">Admin</NavLink></li>
+              )}
 
-            {userData?.role === 'company' && userData?.status === 'approved' && (
-              <>
-                <li className="navbar-item"><NavLink to="/sell-product" activeClassName="active">Vendi</NavLink></li>
-                <li className="navbar-item"><NavLink to="/received-orders" activeClassName="active">Ordini</NavLink></li>
-              </>
-            )}
+              {userData?.role === 'company' && userData?.status === 'approved' && (
+                <>
+                  <li className="navbar-item"><NavLink to="/sell-product" activeClassName="active">Vendi</NavLink></li>
+                  <li className="navbar-item"><NavLink to="/received-orders" activeClassName="active">Ordini</NavLink></li>
+                </>
+              )}
 
-            {userData?.role === 'user' && (
-              <li className="navbar-item"><NavLink to="/orders" activeClassName="active">Ordini</NavLink></li>
-            )}
-          </ul>
-
+              {userData?.role === 'user' && (
+                <li className="navbar-item"><NavLink to="/orders" activeClassName="active">Ordini</NavLink></li>
+              )}
+            </ul>
+          </div>
           <div className="navbar-logout-container">
             {currentUser ? (
               <button onClick={handleLogout} className="logout-button">Logout</button>
             ) : (
-              <NavLink to="/login" activeClassName="active">Login</NavLink>
+              <NavLink to="/login" className="login-button">Login</NavLink>
             )}
           </div>
-        </div>
+        </>
       )}
     </nav>
   );
