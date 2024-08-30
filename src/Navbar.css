@@ -11,13 +11,13 @@
 }
 
 .navbar-logo-container {
-  flex: 1; /* Assicura che il logo abbia spazio sufficiente senza spingere gli altri elementi */
+  flex: 0 0 auto; /* Mantiene il logo all'estrema sinistra */
 }
 
 .navbar-menu-container {
   display: flex;
   justify-content: center;
-  flex: 2; /* Fa sì che il menu occupi più spazio */
+  flex: 1; /* Fa sì che il menu centrale occupi lo spazio rimanente */
 }
 
 .navbar-menu {
@@ -75,7 +75,7 @@
 
 /* Posiziona il pulsante Logout/Login tutto a destra */
 .navbar-logout-container, .navbar-login-container {
-  margin-left: auto;
+  flex: 0 0 auto; /* Mantiene il pulsante all'estrema destra */
 }
 
 /* Stili per il menu a tendina mobile */
