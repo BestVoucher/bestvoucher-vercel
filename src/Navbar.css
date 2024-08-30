@@ -4,20 +4,20 @@
   padding: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Distribuisce gli elementi su tutta la larghezza */
+  justify-content: space-between;
   width: 100%;
-  box-sizing: border-box; /* Include padding e bordi nella larghezza */
+  box-sizing: border-box;
   z-index: 1000;
 }
 
 .navbar-logo-container {
-  margin-right: auto; /* Posiziona l'icona a sinistra */
+  margin-right: auto;
 }
 
 .navbar-menu-container {
   display: flex;
   justify-content: center;
-  flex: 1; /* Fa sì che il menu occupi il resto dello spazio centrale */
+  flex: 1;
 }
 
 .navbar-menu {
@@ -37,9 +37,9 @@
   font-size: 18px;
   position: relative;
   padding-bottom: 5px;
-  background: none; /* Rimuove lo sfondo del pulsante */
-  border: none; /* Rimuove il bordo del pulsante */
-  cursor: pointer; /* Mantiene il puntatore del mouse come per un link */
+  background: none;
+  border: none;
+  cursor: pointer;
   transition: color 0.3s ease;
 }
 
@@ -67,20 +67,20 @@
 
 /* Stile per l'icona nella navbar */
 .navbar-logo {
-  width: 40px; /* Larghezza dell'icona */
-  height: auto; /* Mantiene le proporzioni dell'immagine */
+  width: 40px;
+  height: auto;
   cursor: pointer;
   transition: transform 0.3s ease;
 }
 
 /* Posiziona il pulsante Logout tutto a destra */
 .navbar-logout-container {
-  margin-left: auto; /* Sposta il logout tutto a destra */
+  margin-left: auto;
 }
 
 /* Stili per il menu a tendina mobile */
 .navbar-mobile-menu {
-  display: none; /* Nascondi il menu mobile per default */
+  display: none;
   flex-direction: column;
   align-items: center;
   width: 100%;
@@ -125,39 +125,39 @@
   border: none;
   color: white;
   cursor: pointer;
-  margin-left: auto; /* Sposta il toggle a destra */
+  margin-left: auto;
 }
 
 /* Mostra il menu a tendina e il pulsante su dispositivi mobili */
 @media (max-width: 768px) {
   .navbar-menu-container {
-    display: none; /* Nasconde il menu standard su mobile */
+    display: none;
   }
 
   .navbar-mobile-menu {
-    display: flex; /* Mostra il menu mobile */
+    display: flex;
   }
 
   .navbar-mobile-dropdown {
-    display: none; /* Nasconde il dropdown per default */
+    display: none;
   }
 
   .navbar-mobile-dropdown.open {
-    display: block; /* Mostra il dropdown quando il menu è aperto */
+    display: block;
   }
 }
 
 /* Stile per l'icona della navbar su hover */
 .navbar-logo:hover {
-  transform: scale(1.1); /* Aumenta leggermente la dimensione al passaggio del mouse */
+  transform: scale(1.1);
 }
 
 /* Stili per le card dei prodotti */
 .product-card img {
   width: 200px;
   height: 200px;
-  object-fit: cover; /* Mantiene il rapporto d'aspetto ritagliando l'immagine se necessario */
-  border-radius: 8px; /* Aggiunge un bordo arrotondato opzionale */
+  object-fit: cover;
+  border-radius: 8px;
   margin-bottom: 15px;
 }
 
@@ -195,7 +195,7 @@
 
 .product-card a {
   text-decoration: none;
-  color: inherit; /* Mantiene il colore del testo definito in precedenza */
+  color: inherit;
 }
 
 .product-card a:hover {
@@ -212,7 +212,6 @@
   color: #ff9800;
 }
 
-/* Assicurati che lo stile hover sia simile a quello del link attivo */
 .navbar-item a:hover::before, .logout-button:hover::before, .navbar-item .active::before {
   visibility: visible;
   transform: scaleX(1);
