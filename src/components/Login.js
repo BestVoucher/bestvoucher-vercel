@@ -64,8 +64,8 @@ function Login() {
         )}
         
         <div className="register-link">
-          <p>Non hai ancora un account?</p>
-          <Link to="/register" className="register-button">Registrati</Link>
+          <p className="NotRegistered">Non hai ancora un account?</p>
+          <Link to="/register" className="register-button2">Registrati</Link>
         </div>
       </form>
     </div>

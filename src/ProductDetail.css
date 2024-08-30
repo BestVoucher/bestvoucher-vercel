@@ -60,3 +60,12 @@
   margin-top: 15px;
   font-size: 1.1em;
 }
+
+/* Media query per dispositivi mobili */
+@media (max-width: 768px) {
+  .product-detail {
+  padding-left: 25px; /* Aumenta il padding sinistro */
+  padding-right: 25px; /* Aumenta il padding destro */
+  max-width: 90%;
+  }
+}

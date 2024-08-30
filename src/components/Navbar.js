@@ -40,21 +40,26 @@ function Navbar() {
 
   const getCurrentPageTitle = () => {
     const path = window.location.pathname;
-    switch (path) {
-      case '/':
+  
+    switch (true) {
+      case path === '/':
         return 'Home';
-      case '/personal-area':
+      case path === '/personal-area':
         return 'Profilo';
-      case '/admin-dashboard':
-        return 'Dashboard Admin';
-      case '/sell-product':
+      case path === '/admin-dashboard':
+        return 'Admin';
+      case path === '/sell-product':
         return 'Vendi';
-      case '/received-orders':
-        return 'Ordini ricevuti';
-      case '/orders':
+      case path === '/received-orders':
         return 'Ordini';
-      case '/login':
+      case path === '/orders':
+        return 'Ordini';
+      case path === '/login':
         return 'Login';
+      case path === '/register':
+        return 'Registrazione';
+      case /^\/product\/[^/]+$/.test(path): // Verifica se il percorso corrisponde a "/product/qualcosa"
+        return 'Acquista';
       default:
         return '';
     }

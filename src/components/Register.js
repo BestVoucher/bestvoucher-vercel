@@ -240,8 +240,8 @@ function Register() {
         )}
 
         <div className="login-link">
-          <p>Hai già un account?</p>
-          <Link to="/login" className="login-button">Accedi</Link>
+          <p className="AlreadyRegistered">Hai già un account?</p>
+          <Link to="/login" className="login-button2">Accedi</Link>
         </div>
       </form>
     </div>

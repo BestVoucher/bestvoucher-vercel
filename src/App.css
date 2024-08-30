@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  padding-top: 60px; /* Assicura che il contenuto non si sovrapponga alla navbar fissa */
+  padding-top: 30px; /* Assicura che il contenuto non si sovrapponga alla navbar fissa */
 }
 
 .App-logo {
@@ -125,6 +125,6 @@ html, body {
 /* Responsive */
 @media (max-width: 768px) {
   .App {
-    padding-top: 100px; /* Aggiusta il padding per dispositivi mobili se necessario */
+    padding-top: 30px; /* Aggiusta il padding per dispositivi mobili se necessario */
   }
 }
