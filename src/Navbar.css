@@ -125,7 +125,6 @@
   border: none;
   color: white;
   cursor: pointer;
-  margin-left: auto;
 }
 
 /* Mostra il menu a tendina e il pulsante su dispositivi mobili */
@@ -136,6 +135,9 @@
 
   .navbar-mobile-menu {
     display: flex;
+    align-items: center;
+    justify-content: space-between; /* Assicura che il titolo sia centrato */
+    width: 100%;
   }
 
   .navbar-mobile-dropdown {
@@ -217,18 +219,11 @@
   transform: scaleX(1);
 }
 
-/* Aggiungi stile per il titolo della pagina nella navbar mobile */
+/* Stile per il titolo della pagina nella navbar mobile */
 .navbar-page-title {
   color: white;
   font-size: 18px;
   text-align: center;
   flex: 1;
-}
-
-/* Assicurati che il titolo della pagina sia centrato */
-.navbar-mobile-menu {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
+  margin-left: 10px; /* Assicura che il titolo sia centrato rispetto al logo e al toggle */
 }
