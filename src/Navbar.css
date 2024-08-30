@@ -31,7 +31,7 @@
   margin: 0 15px;
 }
 
-.navbar-item a, .logout-button, .login-button {
+.navbar-item a, .logout-button, .login-button-navbar {
   color: white;
   text-decoration: none;
   font-size: 18px;
@@ -43,7 +43,7 @@
   transition: color 0.3s ease;
 }
 
-.navbar-item a::before, .logout-button::before, .login-button::before {
+.navbar-item a::before, .logout-button::before, .login-button-navbar::before {
   content: '';
   position: absolute;
   width: 100%;
@@ -56,12 +56,12 @@
   transition: all 0.3s ease-in-out;
 }
 
-.navbar-item a:hover::before, .logout-button:hover::before, .login-button:hover::before {
+.navbar-item a:hover::before, .logout-button:hover::before, .login-button-navbar:hover::before {
   visibility: visible;
   transform: scaleX(1);
 }
 
-.navbar-item a:hover, .logout-button:hover, .login-button:hover {
+.navbar-item a:hover, .logout-button:hover, .login-button-navbar:hover {
   color: #ff9800;
 }
 
@@ -170,7 +170,7 @@
   color: #ff9800;
 }
 
-.navbar-item a:hover::before, .logout-button:hover::before, .login-button:hover::before, .navbar-item .active::before {
+.navbar-item a:hover::before, .logout-button:hover::before, .login-button-navbar:hover::before, .navbar-item .active::before {
   visibility: visible;
   transform: scaleX(1);
 }

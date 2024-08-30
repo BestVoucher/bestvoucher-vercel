@@ -139,9 +139,9 @@ function Navbar() {
           </div>
           <div className="navbar-logout-container">
             {currentUser ? (
-              <button onClick={handleLogout} className="logout-button">Logout</button>
+              <button onClick={handleLogout} className="logout-button-navbar">Logout</button>
             ) : (
-              <NavLink to="/login" className="login-button">Login</NavLink>
+              <NavLink to="/login" className="login-button-navbar">Login</NavLink>
             )}
           </div>
         </>
