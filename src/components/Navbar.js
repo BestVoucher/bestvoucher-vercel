@@ -125,13 +125,13 @@ function Navbar() {
             <li className="navbar-item"><NavLink to="/personal-area" activeClassName="active">Profilo</NavLink></li>
 
             {userData?.role === 'admin' && (
-              <li className="navbar-item"><NavLink to="/admin-dashboard" activeClassName="active">Dashboard Admin</NavLink></li>
+              <li className="navbar-item"><NavLink to="/admin-dashboard" activeClassName="active">Admin</NavLink></li>
             )}
 
             {userData?.role === 'company' && userData?.status === 'approved' && (
               <>
                 <li className="navbar-item"><NavLink to="/sell-product" activeClassName="active">Vendi</NavLink></li>
-                <li className="navbar-item"><NavLink to="/received-orders" activeClassName="active">Ordini ricevuti</NavLink></li>
+                <li className="navbar-item"><NavLink to="/received-orders" activeClassName="active">Ordini</NavLink></li>
               </>
             )}
 

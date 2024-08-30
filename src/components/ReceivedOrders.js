@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext'; // Usa il contesto di autenticazione
 import { collection, getDocs, query, where } from 'firebase/firestore'; // Importa Firestore
 import { db } from '../firebase'; // Importa Firestore
-import '../Orders.css';
+import '../ReceivedOrders.css';  // Importa il nuovo file CSS
 
 function ReceivedOrders() {
   const { currentUser } = useAuth(); // Ottieni l'utente corrente
