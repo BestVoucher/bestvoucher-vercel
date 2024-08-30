@@ -11,13 +11,13 @@
 }
 
 .navbar-logo-container {
-  margin-right: auto;
+  flex: 1; /* Assicura che il logo abbia spazio sufficiente senza spingere gli altri elementi */
 }
 
 .navbar-menu-container {
   display: flex;
   justify-content: center;
-  flex: 1;
+  flex: 2; /* Fa sì che il menu occupi più spazio */
 }
 
 .navbar-menu {
@@ -73,8 +73,8 @@
   transition: transform 0.3s ease;
 }
 
-/* Posiziona il pulsante Logout tutto a destra */
-.navbar-logout-container {
+/* Posiziona il pulsante Logout/Login tutto a destra */
+.navbar-logout-container, .navbar-login-container {
   margin-left: auto;
 }
 
