@@ -1,7 +1,7 @@
 /* Stili di base per il menu di navigazione */
 .navbar {
   background-color: #333;
-  padding: 20px;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
