@@ -216,3 +216,19 @@
   visibility: visible;
   transform: scaleX(1);
 }
+
+/* Aggiungi stile per il titolo della pagina nella navbar mobile */
+.navbar-page-title {
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  flex: 1;
+}
+
+/* Assicurati che il titolo della pagina sia centrato */
+.navbar-mobile-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
