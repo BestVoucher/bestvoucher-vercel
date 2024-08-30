@@ -1,72 +1,86 @@
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.login-form {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+  color: #333333;
+}
+
+.login-input {
+  width: 90%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.login-button {
+  width: 95%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+.login-message {
+  margin-top: 15px;
+  font-size: 16px;
+}
+
+.login-message.error {
+  color: red;
+}
+
+.login-message.success {
+  color: green;
+}
+
+.register-link {
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.register-button {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+}
+
+/* Media query per dispositivi mobili */
+@media (max-width: 768px) {
+  .login-container {
+    align-items: flex-start; /* Allinea la scheda di login verso l'alto */
+    padding-top: 20px; /* Riduce lo spazio in alto su mobile */
+    min-height: calc(100vh - 60px); /* Adatta l'altezza per considerare la navbar su mobile */
   }
-  
+
   .login-form {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
+    margin-top: 20px; /* Aggiusta il margine superiore per un migliore posizionamento su mobile */
+    padding: 20px; /* Riduci il padding interno della scheda di login su mobile */
   }
-  
-  .login-form h2 {
-    margin-bottom: 20px;
-    color: #333333;
-  }
-  
-  .login-input {
-    width: 90%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #dddddd;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  .login-button {
-    width: 95%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .login-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .login-message {
-    margin-top: 15px;
-    font-size: 16px;
-  }
-  
-  .login-message.error {
-    color: red;
-  }
-  
-  .login-message.success {
-    color: green;
-  }
-  
-  .register-link {
-    margin-top: 20px;
-    font-size: 16px;
-  }
-  
-  .register-button {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-    color: white;
-  }
+}
