@@ -43,7 +43,7 @@ function Navbar() {
   
     switch (true) {
       case path === '/':
-        return 'Home';
+        return 'BestVoucher';
       case path === '/personal-area':
         return 'Profilo';
       case path === '/admin-dashboard':
@@ -60,6 +60,10 @@ function Navbar() {
         return 'Registrazione';
       case /^\/product\/[^/]+$/.test(path): // Verifica se il percorso corrisponde a "/product/qualcosa"
         return 'Acquista';
+      case /^\/company\/[^/]+$/.test(path): // Verifica se il percorso corrisponde a "/product/qualcosa"
+        return 'Azienda';
+      case path === '/companies-by-category':
+        return 'Categorie';
       default:
         return '';
     }
@@ -85,6 +89,9 @@ function Navbar() {
             </li>
             <li className="navbar-item">
               <NavLink to="/personal-area" onClick={toggleMenu} activeClassName="active">Profilo</NavLink>
+            </li>
+            <li className="navbar-item">
+              <NavLink to="/companies-by-category" onClick={toggleMenu} activeClassName="active">Categorie</NavLink>
             </li>
 
             {userData?.role === 'admin' && (
@@ -125,6 +132,7 @@ function Navbar() {
             <ul className="navbar-menu">
               <li className="navbar-item"><NavLink to="/" activeClassName="active">Home</NavLink></li>
               <li className="navbar-item"><NavLink to="/personal-area" activeClassName="active">Profilo</NavLink></li>
+              <li className="navbar-item"><NavLink to="/companies-by-category" activeClassName="active">Categorie</NavLink></li>
 
               {userData?.role === 'admin' && (
                 <li className="navbar-item"><NavLink to="/admin-dashboard" activeClassName="active">Admin</NavLink></li>

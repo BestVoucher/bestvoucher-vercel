@@ -10,12 +10,13 @@ function SellProduct() {
   const [productData, setProductData] = useState({
     title: '',
     description: '',
-    price: '',
+    normalPrice: '', // Prezzo di listino
+    Price: '', // Prezzo scontato
     image: null,
   });
   const [message, setMessage] = useState(null);
 
-  const { title, description, price, image } = productData;
+  const { title, description, normalPrice, Price, image } = productData;
 
   const onChange = e => {
     setProductData({
@@ -35,13 +36,21 @@ function SellProduct() {
     setProductData({
       title: '',
       description: '',
-      price: '',
+      normalPrice: '',
+      Price: '',
       image: null,
     });
   };
 
   const onSubmit = async e => {
     e.preventDefault();
+
+    // Controllo che il prezzo scontato sia inferiore al prezzo di listino
+    if (parseFloat(Price) >= parseFloat(normalPrice)) {
+      setMessage("Il prezzo scontato deve essere inferiore al prezzo di listino.");
+      return;
+    }
+
     try {
       let imageUrl = '';
       if (image) {
@@ -53,7 +62,8 @@ function SellProduct() {
       await addDoc(collection(db, 'products'), {
         title,
         description,
-        price,
+        normalPrice,
+        Price,
         imageUrl,
         companyName: userData.companyName,
         userId: currentUser.uid,
@@ -63,6 +73,7 @@ function SellProduct() {
       resetForm();
     } catch (err) {
       console.error("Errore durante l'aggiunta del prodotto:", err.message);
+      setMessage('Errore durante l\'aggiunta del prodotto.');
     }
   };
 
@@ -96,14 +107,27 @@ function SellProduct() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="price">Prezzo</label>
+          <label htmlFor="normalPrice">Prezzo di listino</label>
           <input
             type="number"
-            id="price"
-            name="price"
-            value={price}
+            id="normalPrice"
+            name="normalPrice"
+            value={normalPrice}
             onChange={onChange}
-            placeholder="Prezzo"
+            placeholder="Prezzo di listino"
+            required
+            className="form-input"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="discountedPrice">Prezzo scontato BestVoucher</label>
+          <input
+            type="number"
+            id="discountedPrice"
+            name="discountedPrice"
+            value={Price}
+            onChange={onChange}
+            placeholder="Prezzo che il cliente dovrà pagare"
             required
             className="form-input"
           />

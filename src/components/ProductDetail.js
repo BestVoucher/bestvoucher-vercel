@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { PayPalScriptProvider, PayPalButtons, FUNDING } from '@paypal/react-paypal-js';
 import { useAuth } from '../context/AuthContext';
@@ -10,8 +10,13 @@ import '../ProductDetail.css';
 function ProductDetail({ products }) {
   const { productId } = useParams();
   const { currentUser, userData } = useAuth();
-  const [errorMessage, setErrorMessage] = React.useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate(); // Per reindirizzare l'utente dopo l'ordine
+
+  useEffect(() => {
+    // Scrolla la pagina verso l'alto quando il componente si monta
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!products) {
     return <p>Caricamento in corso...</p>;
@@ -97,8 +102,9 @@ function ProductDetail({ products }) {
       <img src={product.imageUrl} alt={product.title} className="product-detail-image" />
       <h2>{product.title}</h2>
       <p style={{ whiteSpace: 'pre-wrap' }}>{product.description}</p> {/* Formattazione del testo */}
-      <p>Prezzo: €{product.price}</p>
-      <p>Venduto da: {product.companyName}</p>
+      <p><strong>Prezzo di listino:</strong> € <s>{product.normalPrice}</s></p> {/* Mostra il prezzo normale */}
+      <p><strong>Prezzo BestVoucher:</strong> € {product.price}</p> {/* Mostra il prezzo scontato */}
+      <p><strong>Venduto da:</strong> {product.companyName}</p>
 
       {!showPayPalButton && (
         <p className="error-message">

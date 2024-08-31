@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'; // Importa Link qui
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'; 
 import Register from './components/Register';
 import Login from './components/Login';
 import PersonalArea from './components/PersonalArea';
@@ -7,13 +7,16 @@ import OrderSummary from './components/OrderSummary';
 import SellProduct from './components/SellProduct';
 import ProductDetail from './components/ProductDetail';
 import Orders from './components/Orders';
+import CompanyProfile from './components/CompanyProfile';
 import Terms from './components/Terms';
 import AdminDashboard from './components/AdminDashboard';
-import ReceivedOrders from './components/ReceivedOrders';  // Importa la nuova pagina "Ordini Ricevuti"
+import ReceivedOrders from './components/ReceivedOrders';
+import CompaniesByCategory from './components/CompaniesByCategory'; 
 import { AuthProvider } from './context/AuthContext';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from './firebase';
-import Navbar from './components/Navbar';  // Importa il componente Navbar
+import Navbar from './components/Navbar';
+import useScrollToTop from './hooks/useScrollToTop';  // Importa l'hook personalizzato
 import './App.css';
 
 function App() {
@@ -46,19 +49,22 @@ function App() {
     <AuthProvider>
       <Router>
         <div className="App">
-          <Navbar /> {/* Usa il componente Navbar qui */}
+          <Navbar />
+          <useScrollToTop /> {/* Sposta l'uso di useScrollToTop qui */}
 
           <Routes>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/personal-area" element={<PersonalArea />} />
             <Route path="/sell-product" element={<SellProduct />} />
+            <Route path="/companies-by-category" element={<CompaniesByCategory />} />
+            <Route path="/company/:companydocname" element={<CompanyProfile />} />
             <Route path="/product/:productId" element={<ProductDetail products={products} />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/order-summary/:orderNumber" element={<OrderSummary />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/terms" element={<Terms />} />
-            <Route path="/received-orders" element={<ReceivedOrders />} /> {/* Route per la nuova pagina */}
+            <Route path="/received-orders" element={<ReceivedOrders />} />
             <Route path="/" element={
               <div className="App">
                 <h1>Acquista i tuoi voucher e risparmia!</h1>
@@ -69,8 +75,9 @@ function App() {
                         <Link to={`/product/${product.id}`}>
                           <img src={product.imageUrl} alt={product.title} />
                           <h2>{product.title}</h2>
-                          <p>Prezzo: €{product.price}</p>
-                          <p>Venduto da: {product.companyName}</p>
+                          <p><strong>Prezzo di listino:</strong> € <s>{product.normalPrice}</s></p>
+                          <p><strong>Prezzo BestVoucher:</strong> € {product.price}</p>
+                          <p><strong>Offerto da:</strong> {product.companyName}</p>
                         </Link>
                       </div>
                     ))}
