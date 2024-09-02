@@ -47,6 +47,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
+  padding-bottom: 15px; /* Aggiunge ulteriore spazio sotto le schede */
 }
 
 .product-card {
@@ -58,6 +59,7 @@
   max-width: 300px;
   text-align: center;
   transition: transform 0.3s ease;
+  margin-bottom: 20px;
 }
 
 .product-card:hover {
