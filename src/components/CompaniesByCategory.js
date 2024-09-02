@@ -21,7 +21,7 @@ function CompaniesByCategory() {
 
         const categories = {
           'Trattamenti estetici': [],
-          'Capelli e barba': [],
+          'Parruchhieri': [],
           'Fisioterapia': [],
           'Benessere mentale': [],
         };

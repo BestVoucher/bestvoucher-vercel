@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { auth, db } from '../firebase';
+import { auth, db, storage } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Link } from 'react-router-dom';
 import '../Register.css';  // Importa il file CSS
 
@@ -9,26 +10,30 @@ function Register() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    confirmPassword: '',  // Aggiungi conferma password
-    role: '',  // Imposta come vuoto per gestire la prima opzione non valida
+    confirmPassword: '',
+    role: '',
     firstName: '',
     lastName: '',
     birthDate: '',
-    gender: '',  // Aggiungi gestione per genere
+    gender: '',
     companyName: '',
-    piva: '',  // Aggiungi P.IVA
+    piva: '',
     address: '',
     postalCode: '',
     city: '',
-    acceptedTerms: false, // Nuovo campo per l'accettazione dei termini
+    category: '',  // Nuovo campo categoria
+    description: '',  // Nuovo campo descrizione
+    website: '',  // Nuovo campo sito web
+    logoUrl: null,  // Nuovo campo logo
+    acceptedTerms: false,
   });
 
   const [message, setMessage] = useState(null);
 
-  const { email, password, confirmPassword, role, firstName, lastName, birthDate, gender, companyName, piva, address, postalCode, city, acceptedTerms } = formData;
+  const { email, password, confirmPassword, role, firstName, lastName, birthDate, gender, companyName, piva, address, postalCode, city, category, description, website, logo, acceptedTerms } = formData;
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-
+  const onFileChange = e => setFormData({ ...formData, logo: e.target.files[0] });
   const onCheckboxChange = e => setFormData({ ...formData, [e.target.name]: e.target.checked });
 
   const onSubmit = async e => {
@@ -45,8 +50,13 @@ function Register() {
       return;
     }
 
-    if (role === 'user' && gender === '') {  // Verifica che un genere valido sia selezionato
+    if (role === 'user' && gender === '') {
       setMessage({ type: 'error', text: 'Seleziona un genere valido.' });
+      return;
+    }
+
+    if (role === 'company' && (!category || !description || !website || !logo)) {
+      setMessage({ type: 'error', text: 'Tutti i campi sono obbligatori per la registrazione aziendale.' });
       return;
     }
 
@@ -64,7 +74,7 @@ function Register() {
         email: user.email,
         role: role,
         acceptedTerms: true,
-        termsAcceptedAt: timestamp, // Data e ora dell'accettazione dei termini
+        termsAcceptedAt: timestamp,
       };
 
       if (role === 'user') {
@@ -76,13 +86,24 @@ function Register() {
           gender: gender,
         });
       } else if (role === 'company') {
+        let logoUrl = '';
+        if (logo) {
+          const logoRef = ref(storage, `CompaniesLogo/${logo.name}`);
+          await uploadBytes(logoRef, logo);
+          logoUrl = await getDownloadURL(logoRef);
+        }
+
         await setDoc(doc(db, 'companyRequests', user.uid), {
           ...userData,
           companyName: companyName,
-          piva: piva,  // Salva P.IVA su Firestore
+          piva: piva,
           address: address,
           postalCode: postalCode,
           city: city,
+          category: category,
+          description: description,
+          website: website,
+          logoUrl: logoUrl,
           status: 'pending',
         });
       }
@@ -98,7 +119,7 @@ function Register() {
       <form onSubmit={onSubmit} className="register-form">
         <h2>Registrati</h2>
         <select name="role" value={role} onChange={onChange} className="register-input" required>
-          <option value="">Tipo di registrazione</option> {/* Opzione non valida */}
+          <option value="">Tipo di registrazione</option>
           <option value="user">Utente</option>
           <option value="company">Azienda</option>
         </select>
@@ -132,7 +153,7 @@ function Register() {
               className="register-input"
             />
             <select name="gender" value={gender} onChange={onChange} required className="register-input">
-              <option value="">Genere</option> {/* Non permette di inviare il modulo con questa opzione */}
+              <option value="">Genere</option>
               <option value="male">Uomo</option>
               <option value="female">Donna</option>
               <option value="other">Altro</option>
@@ -187,9 +208,40 @@ function Register() {
               required
               className="register-input"
             />
+            <select name="category" value={category} onChange={onChange} required className="register-input">
+              <option value="">Categoria attività</option>
+              <option value="Trattamenti estetici">Trattamenti estetici</option>
+              <option value="Parrucchieri">Parrucchieri</option>
+              <option value="Fisioterapia">Fisioterapia</option>
+              <option value="Benessere mentale">Benessere mentale</option>
+            </select>
+            <textarea
+              name="description"
+              value={description}
+              onChange={onChange}
+              placeholder="Descrizione dell'attività"
+              required
+              className="register-textarea"
+            />
+            <input
+              type="url"
+              name="website"
+              value={website}
+              onChange={onChange}
+              placeholder="Sito web o social network"
+              required
+              className="register-input"
+            />
+            <label className="labelLogo" htmlFor="image">Logo azienda</label>
+            <input
+              type="file"
+              name="logo"
+              onChange={onFileChange}
+              required
+              className="register-input-logo"
+            />
           </>
         )}
-
         <input
           type="email"
           name="email"
