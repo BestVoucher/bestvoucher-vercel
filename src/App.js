@@ -10,6 +10,7 @@ import Orders from './components/Orders';
 import CompanyProfile from './components/CompanyProfile';
 import Terms from './components/Terms';
 import FAQ from './components/FAQ';
+import PrivacyPolicy from './components/PrivacyPolicy';
 import AdminDashboard from './components/AdminDashboard';
 import ReceivedOrders from './components/ReceivedOrders';
 import CompaniesByCategory from './components/CompaniesByCategory'; 
@@ -28,22 +29,26 @@ function App() {
           <Navbar />
           <useScrollToTop /> {/* Sposta l'uso di useScrollToTop qui */}
 
-          <Routes>
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/personal-area" element={<PersonalArea />} />
-            <Route path="/sell-product" element={<SellProduct />} />
-            <Route path="/companies-by-category" element={<CompaniesByCategory />} />
-            <Route path="/company/:companydocname" element={<CompanyProfile />} />
-            <Route path="/product/:productId" element={<ProductDetail />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard />} />
-            <Route path="/order-summary/:orderNumber" element={<OrderSummary />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/received-orders" element={<ReceivedOrders />} />
-            <Route path="/" element={<ProductList />} /> {/* Usa il nuovo componente per la homepage */}
-          </Routes>
+          <div className="content"> {/* Avvolge le Routes in un div con la classe "content" */}
+            <Routes>
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/personal-area" element={<PersonalArea />} />
+              <Route path="/sell-product" element={<SellProduct />} />
+              <Route path="/companies-by-category" element={<CompaniesByCategory />} />
+              <Route path="/company/:companydocname" element={<CompanyProfile />} />
+              <Route path="/product/:productId" element={<ProductDetail />} />
+              <Route path="/admin-dashboard" element={<AdminDashboard />} />
+              <Route path="/order-summary/:orderNumber" element={<OrderSummary />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/received-orders" element={<ReceivedOrders />} />
+              <Route path="/" element={<ProductList />} /> {/* Usa il nuovo componente per la homepage */}
+            </Routes>
+          </div>
+
           <Footer /> {/* Aggiungi il footer qui */}
         </div>
       </Router>

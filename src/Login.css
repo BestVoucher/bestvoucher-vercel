@@ -12,13 +12,13 @@
   border-radius: 10px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   text-align: center;
 }
 
 .login-form h2 {
   margin-bottom: 20px;
-  color: #333333;
+  color: #333;
 }
 
 .login-input {
@@ -28,6 +28,7 @@
   border: 1px solid #dddddd;
   border-radius: 5px;
   font-size: 16px;
+  box-sizing: border-box;
 }
 
 .login-button {
@@ -94,5 +95,6 @@
     margin-top: 20px; /* Aggiusta il margine superiore per un migliore posizionamento su mobile */
     padding: 20px; /* Riduci il padding interno della scheda di login su mobile */
     padding-top: 5px;
+    max-width: 80%;
   }
 }

@@ -38,11 +38,11 @@ function ReceivedOrders() {
   }
 
   return (
-    <div className="orders">
+    <div className="received-orders">
       <h2>Ordini Ricevuti</h2>
-      <ul className="orders-list">
+      <ul className="received-orders-list">
         {orders.map((order, index) => (
-          <li key={index} className="order-item">
+          <li key={index} className="received-order-item">
             <p><strong>Numero Ordine:</strong> {order.orderNumber}</p>
             <p><strong>Data:</strong> {new Date(order.createdAt).toLocaleString()}</p>
             <p><strong>Prodotto Acquistato:</strong> {order.productTitle}</p>

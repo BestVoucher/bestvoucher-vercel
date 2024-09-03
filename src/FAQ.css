@@ -1,32 +1,36 @@
 .faq-container {
     width: 800px; /* Larghezza fissa */
-    margin: 40px auto;
+    margin: 0px auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     overflow: hidden; /* Assicura che il contenuto non esca dai bordi */
-  }
-  
-  .faq-container h1 {
+    margin-top: 60px; /* Ridotto per diminuire lo spazio sopra il container */
+    box-sizing: border-box;
+}
+
+.faq-container .faq-title {
     text-align: center;
-    margin-bottom: 20px;
     font-size: 2.5rem;
     color: #333;
-  }
-  
-  .faq-category h2 {
+    margin-bottom: 20px;
+    margin-top: 0px;
+    box-sizing: border-box;
+}
+
+.faq-category h2 {
     font-size: 2rem;
     color: #007bff;
     margin-top: 20px;
     margin-bottom: 10px;
-  }
-  
-  .faq-item {
+}
+
+.faq-item {
     margin-bottom: 15px;
-  }
-  
-  .faq-question {
+}
+
+.faq-question {
     display: block;
     width: 100%;
     text-align: left;
@@ -38,13 +42,13 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  .faq-question:hover {
+}
+
+.faq-question:hover {
     background-color: #f0f0f0;
-  }
-  
-  .faq-answer {
+}
+
+.faq-answer {
     margin-top: 10px;
     padding: 10px;
     background-color: #e9ecef;
@@ -53,11 +57,11 @@
     color: #555;
     max-height: 200px; /* Limite di altezza per la risposta */
     overflow-y: auto; /* Scrolling verticale per risposte lunghe */
-  }
+}
 
-  /* Media query per dispositivi mobili */
+/* Media query per dispositivi mobili */
 @media (max-width: 768px) {
     .faq-container {
         width: 90%; /* Larghezza fissa */
     }
-  }
+}

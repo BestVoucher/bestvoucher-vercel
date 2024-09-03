@@ -21,7 +21,7 @@ function CompaniesByCategory() {
 
         const categories = {
           'Trattamenti estetici': [],
-          'Parruchhieri': [],
+          'Parrucchieri': [],
           'Fisioterapia': [],
           'Benessere mentale': [],
         };
@@ -53,9 +53,9 @@ function CompaniesByCategory() {
 
   return (
     <div className="companies-by-category">
-      <h1>I nostri partner</h1>
+      <h2 className="companiespage-title">I nostri partner</h2>
       {Object.keys(companies).map(category => (
-        <div key={category} className="category-section card">
+        <div key={category} className="category-section">
           <h2>{category}</h2>
           <ul>
             {companies[category].length > 0 ? (

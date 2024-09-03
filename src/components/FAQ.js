@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../FAQ.css'; // Assicurati di creare e collegare un file CSS per gli stili
 
 function FAQ() {
+  useEffect(() => {
+    // Scrolla la pagina verso l'alto quando il componente si monta
+    window.scrollTo(0, 0);
+  }, []);
+
   const categories = [
     {
       title: "Acquisti, rimborsi e scadenze",
@@ -67,7 +72,7 @@ function FAQ() {
 
   return (
     <div className="faq-container">
-      <h1>FAQ - Domande Frequenti</h1>
+      <h1 className="faq-title">FAQ - Domande Frequenti</h1>
       {categories.map((category, categoryIndex) => (
         <div key={category.title} className="faq-category">
           <h2>{category.title}</h2>

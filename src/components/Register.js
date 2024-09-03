@@ -118,7 +118,7 @@ function Register() {
     <div className="register-container">
       <form onSubmit={onSubmit} className="register-form">
         <h2>Registrati</h2>
-        <select name="role" value={role} onChange={onChange} className="register-input" required>
+        <select name="role" value={role} onChange={onChange} className="register-choice" required>
           <option value="">Tipo di registrazione</option>
           <option value="user">Utente</option>
           <option value="company">Azienda</option>
@@ -208,7 +208,7 @@ function Register() {
               required
               className="register-input"
             />
-            <select name="category" value={category} onChange={onChange} required className="register-input">
+            <select name="category" value={category} onChange={onChange} required className="register-choice">
               <option value="">Categoria attività</option>
               <option value="Trattamenti estetici">Trattamenti estetici</option>
               <option value="Parrucchieri">Parrucchieri</option>

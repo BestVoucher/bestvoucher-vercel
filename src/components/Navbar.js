@@ -56,6 +56,10 @@ function Navbar() {
         return 'Ordini';
       case path === '/login':
         return 'Login';
+      case path === '/terms':
+        return 'Termini';
+      case path === '/faq':
+        return 'FAQ';
       case path === '/register':
         return 'Registrazione';
       case /^\/product\/[^/]+$/.test(path): // Verifica se il percorso corrisponde a "/product/qualcosa"
@@ -96,7 +100,7 @@ function Navbar() {
 
             {userData?.role === 'admin' && (
               <li className="navbar-item">
-                <NavLink to="/admin-dashboard" onClick={toggleMenu} activeClassName="active">Dashboard Admin</NavLink>
+                <NavLink to="/admin-dashboard" onClick={toggleMenu} activeClassName="active">Admin</NavLink>
               </li>
             )}
 

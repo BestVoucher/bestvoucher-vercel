@@ -5,6 +5,7 @@
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 60px;
 }
 
 .sell-product-title {
@@ -78,7 +79,7 @@
 @media (max-width: 768px) {
 .sell-product-container {
   align-items: flex-start; /* Allinea la scheda di login verso l'alto */
-  padding-top: 20px; /* Riduce lo spazio in alto su mobile */
+  margin-top: 40px; /* Riduce lo spazio in alto su mobile */
   max-width: 90%;
 }
 }

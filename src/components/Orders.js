@@ -34,7 +34,7 @@ function Orders() {
   }
 
   return (
-    <div className="orders-page">
+    <div className="orders">
       <h2>I miei ordini</h2>
       <ul className="orders-list">
         {orders.map(order => (

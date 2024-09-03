@@ -15,7 +15,7 @@ function PersonalArea() {
 
   return (
     <div className="personal-area-container">
-      <h2 className="personal-area-title">Benvenuto nella tua Area Personale</h2>
+      <h2 className="personal-area-title">Area Personale</h2>
       {userData ? (
         <div className="personal-area-content">
           <p className="personal-area-info"><strong>Email:</strong> {currentUser.email}</p>

@@ -1,36 +1,48 @@
-.orders {
+.received-orders {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    margin-top: 20px;
-  }
+    margin-top: 40px;
+}
 
-  .orders h2 {
+.received-orders h2 {
     text-align: center;
     font-size: 2rem;
-    margin-bottom: -25px;
+    margin-bottom: 20px;
     color: #333;
     margin-top: 10px;
-  }
-  
-  .orders-list {
+}
+
+.received-orders-list {
     list-style: none;
     padding: 0;
-    margin-top: 0px;
-  }
-  
-  .order-item {
+    margin: 0 auto; /* Centra la lista all'interno del contenitore */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra gli elementi figli orizzontalmente */
+}
+
+.received-order-item {
     background-color: #f8f8f8;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 15px;
-  }
-  
-  .order-item p {
+    max-width: 50%;
+    width: 100%; /* Assicura che l'elemento occupi tutta la larghezza disponibile */
+}
+
+.received-order-item p {
     margin: 5px 0;
-  }
-  
-  .order-item strong {
+}
+
+.received-order-item strong {
     color: #333;
+}
+
+/* Media query per dispositivi mobili */
+@media (max-width: 768px) {
+    .received-order-item {
+        max-width: 80%;
+    }
   }
