@@ -1,103 +1,162 @@
+/* Contenitore principale per il layout a due colonne su desktop */
+.company-profile-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px auto;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* Colonna di sinistra (Company details) */
 .company-details-container {
-    margin: 20px auto; /* Centra il contenitore orizzontalmente */
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Centra tutto il contenuto */
-    width: fit-content; /* Adatta la larghezza al contenuto */
-    margin-top: 40px;
-    margin-bottom: 0px;
+  flex: 1;
+  min-width: 300px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: 30px;
+}
+
+.company-logo-small {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-top: 0px;
+}
+
+.company-details h2 {
+  font-size: 2.5em;
+  color: #333;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.company-details p {
+  font-size: 1.2em;
+  color: #666;
+}
+
+.company-details iframe {
+  margin-top: 20px;
+  width: 100%;
+  height: 300px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding-bottom: 0px;
+  margin-top: 0px;
+}
+
+/* Colonna di destra (Company products) */
+.company-products {
+  flex: 1;
+  min-width: 300px;
+}
+
+.products-list2 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+/* Stili per le schede prodotto */
+.product-card2 {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card2:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.product-card2 img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.product-card2 h2 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.product-card2 p {
+  color: #555;
+  font-size: 1em;
+}
+
+/* Stile per il pulsante "Vedi su mappa" */
+.show-map-button {
+  background-color: #333;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.show-map-button:hover {
+  background-color: #484848;
+}
+
+.product-link {
+  text-decoration: none; /* Rimuove la sottolineatura del link */
+  color: inherit; /* Mantiene il colore del testo */
+}
+
+.product-link:hover {
+  text-decoration: none; /* Assicura che la sottolineatura sia rimossa anche al passaggio del mouse */
+}
+
+/* Media query per dispositivi mobili */
+@media (max-width: 768px) {
+  /* Su mobile, tutto si allinea verticalmente */
+  .company-profile-container {
+    display: block;
   }
-  
-  .company-logo-small {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 0px; /* Spazio tra il logo e il nome */
-    margin-top: 0px;
-  }
-  
-  .company-details h2 {
-    font-size: 2.5em;
-    color: #333;
-    margin-bottom: 10px;
-    margin-top: 0px;
-  }
-  
-  .company-details p {
-    font-size: 1.2em;
-    color: #666;
-  }
-  
+
   .company-products {
-    margin-top: 20px;
-    margin-bottom: 5px;
+    width: 100%;
   }
-  
+
+  .company-details-container {
+    margin-top: 10px;
+    width: 90%;
+    margin-bottom: 20px;
+  }
+
+  .company-details iframe {
+    width: 100%;
+    max-height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+
   .products-list2 {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    padding-bottom: 5px; /* Aggiunge ulteriore spazio sotto le schede */
-  }
-  
-  .product-link {
-    text-decoration: none; /* Rimuove la sottolineatura del link */
-    color: inherit; /* Mantiene il colore del testo */
-  }
-  
-  .product-card2 {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    max-width: 300px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 20px;
-  }
-  
-  .product-card2:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-  }
-  
-  .product-card2 img {
-    width: 250px;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 10px;
-  }
-  
-  .product-card2 h3 {
-    font-size: 1.5rem;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .product-card2 p {
-    color: #555;
-    font-size: 1em;
-    margin-bottom: 10px;
-  }
-  
-  .product-card2 .product-price {
-    font-size: 1.2em;
-    color: #007bff;
-    font-weight: bold;
-    margin-bottom: 15px;
+    margin-top: 30px;
   }
 
-  /* Media query per dispositivi mobili */
-@media (max-width: 768px) {
-    .company-details-container {
-      align-items: flex-start; /* Allinea la scheda di login verso l'alto */
-      padding-top: 20px; /* Riduce lo spazio in alto su mobile */
-      max-width: 90%;
-    }
+  .product-card2 {
+    max-width: 100%; /* Imposta la larghezza massima al 100% su mobile */
   }
+}

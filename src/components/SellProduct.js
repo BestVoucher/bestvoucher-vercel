@@ -82,7 +82,6 @@ function SellProduct() {
       <h2 className="sell-product-title">Aggiungi un nuovo prodotto</h2>
       <form onSubmit={onSubmit} className="sell-product-form">
         <div className="form-group">
-          <label htmlFor="title">Titolo del prodotto</label>
           <input
             type="text"
             id="title"
@@ -95,7 +94,6 @@ function SellProduct() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="description">Descrizione del prodotto</label>
           <textarea
             id="description"
             name="description"
@@ -107,7 +105,6 @@ function SellProduct() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="normalPrice">Prezzo di listino</label>
           <input
             type="number"
             id="normalPrice"
@@ -120,7 +117,6 @@ function SellProduct() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="discountedPrice">Prezzo scontato BestVoucher</label>
           <input
             type="number"
             id="discountedPrice"

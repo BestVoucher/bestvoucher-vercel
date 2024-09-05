@@ -13,43 +13,89 @@ import FAQ from './components/FAQ';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import AdminDashboard from './components/AdminDashboard';
 import ReceivedOrders from './components/ReceivedOrders';
+import Cart from './components/Cart';
 import CompaniesByCategory from './components/CompaniesByCategory'; 
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
-import useScrollToTop from './hooks/useScrollToTop';  // Importa l'hook personalizzato
-import ProductList from './components/ProductList'; // Importa il nuovo componente
-import Footer from './components/Footer'; // Importa il componente Footer
+import ScrollToTop from './hooks/ScrollToTop';  // Modifica qui l'import dell'hook
+import ProductList from './components/ProductList';
+import Footer from './components/Footer';
+import ProtectedRoute from './components/ProtectedRoute';  
+import AdminRoute from './components/AdminRoute';
 import './App.css';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
+        <ScrollToTop /> {/* Chiamata al componente ScrollToTop dentro il Router */}
         <div className="App">
           <Navbar />
-          <useScrollToTop /> {/* Sposta l'uso di useScrollToTop qui */}
 
-          <div className="content"> {/* Avvolge le Routes in un div con la classe "content" */}
+          <div className="content">
             <Routes>
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/personal-area" element={<PersonalArea />} />
-              <Route path="/sell-product" element={<SellProduct />} />
               <Route path="/companies-by-category" element={<CompaniesByCategory />} />
               <Route path="/company/:companydocname" element={<CompanyProfile />} />
               <Route path="/product/:productId" element={<ProductDetail />} />
-              <Route path="/admin-dashboard" element={<AdminDashboard />} />
               <Route path="/order-summary/:orderNumber" element={<OrderSummary />} />
-              <Route path="/orders" element={<Orders />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/faq" element={<FAQ />} />
-              <Route path="/received-orders" element={<ReceivedOrders />} />
-              <Route path="/" element={<ProductList />} /> {/* Usa il nuovo componente per la homepage */}
+              <Route path="/" element={<ProductList />} />
+
+              {/* Rotte protette */}
+              <Route
+                path="/admin-dashboard"
+                element={
+                  <AdminRoute requiredRole="admin">
+                    <AdminDashboard />
+                  </AdminRoute>
+                }
+              />
+
+              <Route
+                path="/sell-product"
+                element={
+                  <ProtectedRoute requiredRole="company" companyApproved={true}>
+                    <SellProduct />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/received-orders"
+                element={
+                  <ProtectedRoute requiredRole="company" companyApproved={true}>
+                    <ReceivedOrders />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/orders"
+                element={
+                  <ProtectedRoute requiredRole="user">
+                    <Orders />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Consenti accesso al carrello per utenti "user" o non loggati */}
+              <Route
+                path="/cart"
+                element={
+                  <ProtectedRoute requiredRole={null}>
+                    <Cart />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </div>
 
-          <Footer /> {/* Aggiungi il footer qui */}
+          <Footer />
         </div>
       </Router>
     </AuthProvider>

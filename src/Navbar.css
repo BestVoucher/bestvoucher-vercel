@@ -1,4 +1,4 @@
-/* Stili di base per il menu di navigazione */
+/* Navbar generale */
 .navbar {
   background-color: #333;
   padding: 10px;
@@ -8,12 +8,145 @@
   width: 100%;
   box-sizing: border-box;
   z-index: 1000;
+  position: relative; /* Aggiunto per gestire il dropdown in posizione assoluta */
 }
 
+/* Contenitore per logo */
 .navbar-logo-container {
-  margin-right: auto;
+  flex: 0 0 50px; /* Fissa la larghezza del logo */
 }
 
+/* Titolo della pagina al centro */
+.navbar-page-title {
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  flex: 1; /* Occupa tutto lo spazio disponibile tra il logo e il carrello/toggle */
+  display: flex;
+  justify-content: center;
+}
+
+/* Contenitore del carrello e toggle menu */
+.navbar-mobile-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Stile per il carrello */
+.navbar-cart-container {
+  display: flex;
+  align-items: center;
+  position: relative; /* Necessario per posizionare correttamente il badge */
+}
+
+.cart-icon {
+  width: 30px;
+  height: auto;
+  cursor: pointer;
+  position: relative;
+}
+
+.cart-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Badge del carrello */
+.cart-badge {
+  position: absolute;
+  top: -5px;  /* Sposta il badge leggermente verso l'alto */
+  right: -5px;  /* Sposta il badge leggermente verso destra */
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+.empty-cart-badge {
+  background-color: red; /* Colore per quando il carrello è vuoto */
+  color: white;
+}
+
+.non-empty-cart-badge {
+  background-color: green; /* Colore per quando c'è almeno un prodotto */
+  color: white;
+}
+
+/* Pulsante toggle del menu */
+.menu-toggle-button {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+/* Dropdown profilo */
+.profile-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-button {
+  background: none;
+  color: white;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  padding-bottom: 5px;
+}
+
+.profile-button:hover {
+  color: #ff9800;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #333; /* Imposta uno sfondo simile alla navbar */
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 9999; /* Aggiunto per posizionare il menu sopra gli altri contenuti */
+  list-style: none; /* Rimuove i puntini dall'elenco */
+  padding: 0;
+  margin: 0;
+  top: 100%; /* Posiziona il menu sotto la navbar */
+  right: 0;
+  left: 0;
+}
+
+.profile-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  padding: 10px;
+}
+
+.dropdown-menu li a, .dropdown-menu li button {
+  color: white;
+  text-decoration: none;
+  display: block;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Stile per l'icona nella navbar */
+.navbar-logo {
+  width: 40px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.1);
+}
+
+/* Navbar menu e dropdown (desktop) */
 .navbar-menu-container {
   display: flex;
   justify-content: center;
@@ -31,7 +164,7 @@
   margin: 0 15px;
 }
 
-.navbar-item a, .logout-button, .login-button-navbar {
+.navbar-item a, .logout-button, .login-button-navbar, .ap-button {
   color: white;
   text-decoration: none;
   font-size: 18px;
@@ -43,7 +176,7 @@
   transition: color 0.3s ease;
 }
 
-.navbar-item a::before, .logout-button::before, .login-button-navbar::before {
+.navbar-item a::before, .logout-button::before, .login-button-navbar::before, .ap-button:before {
   content: '';
   position: absolute;
   width: 100%;
@@ -56,111 +189,80 @@
   transition: all 0.3s ease-in-out;
 }
 
-.navbar-item a:hover::before, .logout-button:hover::before, .login-button-navbar:hover::before {
+.navbar-item a:hover::before, .logout-button:hover::before, .login-button-navbar:hover::before, .ap-button:hover:before {
   visibility: visible;
   transform: scaleX(1);
 }
 
-.navbar-item a:hover, .logout-button:hover, .login-button-navbar:hover {
+.navbar-item a:hover, .logout-button:hover, .login-button-navbar:hover, .ap-button:hover {
   color: #ff9800;
 }
 
-/* Stile per l'icona nella navbar */
-.navbar-logo {
-  width: 40px;
-  height: auto;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-/* Posiziona il pulsante Logout/Login tutto a destra */
-.navbar-logout-container, .navbar-login-container {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-}
-
-/* Stili per il menu a tendina mobile */
-.navbar-mobile-menu {
-  display: none;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.navbar-mobile-dropdown {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  background-color: #333;
-  position: absolute;
-  top: 50px;
-  right: 0;
-  left: 0;
-  text-align: center;
-  z-index: 999;
-}
-
-.navbar-mobile-dropdown .navbar-item {
-  padding: 15px 0;
-  border-bottom: 1px solid #444;
-}
-
-.navbar-mobile-dropdown .navbar-item:last-child {
-  border-bottom: none;
-}
-
-.navbar-mobile-dropdown .navbar-item a {
-  color: white;
-  font-size: 18px;
-  text-decoration: none;
-}
-
-.navbar-mobile-dropdown .navbar-item a:hover {
-  color: #ff9800;
-}
-
-/* Stile per il pulsante di apertura del menu mobile */
-.menu-toggle-button {
-  font-size: 24px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-/* Mostra il menu a tendina e il pulsante su dispositivi mobili */
+/* Navbar per dispositivi mobili */
 @media (max-width: 768px) {
+  .navbar-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .cart-badge {
+    top: 10px;  /* Sposta il badge leggermente verso l'alto */
+    right: 50px;  /* Sposta il badge leggermente verso destra */
+  }
+
+  .navbar-cart-container {
+    margin-right: 10px; /* Aggiungi spazio tra il carrello e il toggle menu */
+  }
+
+  .navbar-logo-container {
+    flex: 0 0 50px; /* Definiamo una larghezza fissa per il logo */
+  }
+
+  .navbar-page-title {
+    flex: 1; /* Occupiamo tutto lo spazio centrale per il titolo */
+    text-align: center;
+    margin-left: 10px; /* Evita che sia troppo vicino al logo */
+    margin-right: 10px; /* Evita che sia troppo vicino al carrello/toggle */
+  }
+
+  .navbar-mobile-right {
+    display: flex;
+    align-items: center;
+  }
+
   .navbar-menu-container {
     display: none;
   }
 
-  .navbar-mobile-menu {
-    display: flex;
-  }
-
   .navbar-mobile-dropdown {
     display: none;
+    list-style: none;
   }
 
   .navbar-mobile-dropdown.open {
     display: block;
+    position: absolute; /* Assicura che si sovrapponga al contenuto */
+    top: 100%; /* Posiziona il menu appena sotto la navbar */
+    left: 0;
+    right: 0;
+    background-color: #333; /* Stesso colore della navbar */
+    padding: 10px 0; /* Aggiunge un po' di padding intorno agli elementi */
+    margin-top: 0px;
   }
 
-  .navbar-page-title {
-    color: white;
-    font-size: 18px;
-    text-align: center;
-    flex: 1;
+  .navbar-mobile-dropdown .navbar-item {
+    padding: 15px 0;
+    border-bottom: 1px solid #444; /* Aggiungi un bordo per separare gli elementi */
+  }
+
+  .navbar-mobile-dropdown .navbar-item:last-child {
+    border-bottom: none;
   }
 }
 
 /* Stile per l'icona della navbar su hover */
-.navbar-logo:hover {
-  transform: scale(1.1);
-}
-
 .navbar-item .active {
   color: #ff9800;
   border-bottom: 2px solid #ff9800;

@@ -39,7 +39,7 @@ function ReceivedOrders() {
 
   return (
     <div className="received-orders">
-      <h2>Ordini Ricevuti</h2>
+      <h2>Ordini ricevuti</h2>
       <ul className="received-orders-list">
         {orders.map((order, index) => (
           <li key={index} className="received-order-item">

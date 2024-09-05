@@ -5,12 +5,51 @@ import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
 import '../Navbar.css';
 import logo from '../assets/logo.png';
+import cartIcon from '../assets/cart-icon.png';
 
 function Navbar() {
-  const { currentUser, userData } = useAuth();
+  const { currentUser, userData, cartCount } = useAuth();
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Funzione per ottenere il titolo della pagina attuale
+  const getCurrentPageTitle = () => {
+    const path = window.location.pathname;
+
+    switch (true) {
+      case path === '/':
+        return 'BestVoucher';
+      case path === '/personal-area':
+        return 'Profilo';
+      case path === '/companies-by-category':
+        return 'Categorie';
+      case path === '/cart':
+        return 'Carrello';
+      case path === '/terms':
+        return 'Termini';
+      case path === '/login':
+        return 'Accedi';
+      case path === '/register':
+        return 'Registrati';
+      case path === '/faq':
+        return 'FAQ';
+      case path === '/admin-dashboard':
+        return 'Admin';
+      case path === '/orders':
+        return 'Ordini';
+      case path === '/sell-product':
+        return 'Vendi';
+      case path === '/received-orders':
+        return 'Ordini';
+      case /^\/product\/.+$/.test(path):  // Verifica se il percorso inizia con "/product/"
+        return 'Prodotto';
+      case /^\/company\/.+$/.test(path):  // Verifica se il percorso inizia con "/company/"
+        return 'Azienda';
+      default:
+        return 'Pagina';
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -25,6 +64,12 @@ function Navbar() {
     };
   }, []);
 
+// Definizione della funzione handleNavigate
+const handleNavigate = (path) => {
+  navigate(path);
+  setMenuOpen(false); // Chiude il menu mobile
+};
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -38,41 +83,6 @@ function Navbar() {
     setMenuOpen(!menuOpen);
   };
 
-  const getCurrentPageTitle = () => {
-    const path = window.location.pathname;
-  
-    switch (true) {
-      case path === '/':
-        return 'BestVoucher';
-      case path === '/personal-area':
-        return 'Profilo';
-      case path === '/admin-dashboard':
-        return 'Admin';
-      case path === '/sell-product':
-        return 'Vendi';
-      case path === '/received-orders':
-        return 'Ordini';
-      case path === '/orders':
-        return 'Ordini';
-      case path === '/login':
-        return 'Login';
-      case path === '/terms':
-        return 'Termini';
-      case path === '/faq':
-        return 'FAQ';
-      case path === '/register':
-        return 'Registrazione';
-      case /^\/product\/[^/]+$/.test(path): // Verifica se il percorso corrisponde a "/product/qualcosa"
-        return 'Acquista';
-      case /^\/company\/[^/]+$/.test(path): // Verifica se il percorso corrisponde a "/product/qualcosa"
-        return 'Azienda';
-      case path === '/companies-by-category':
-        return 'Categorie';
-      default:
-        return '';
-    }
-  };
-
   return (
     <nav className="navbar">
       <div className="navbar-logo-container">
@@ -82,83 +92,129 @@ function Navbar() {
       </div>
 
       {isMobile ? (
-        <div className="navbar-mobile-menu">
-          <span className="navbar-page-title">{getCurrentPageTitle()}</span>
-          <button className="menu-toggle-button" onClick={toggleMenu}>
-            ☰
-          </button>
+        <>
+          <div className="navbar-mobile">
+            <span className="navbar-page-title">{getCurrentPageTitle()}</span> {/* Titolo della pagina al centro */}
+            <div className="navbar-mobile-right">
+              {/* Mostra il pulsante carrello solo se l'utente non è loggato o ha il ruolo "user" */}
+              {(!currentUser || userData?.role === 'user') && (
+                <NavLink to="/cart">
+                  <img src={cartIcon} alt="Cart" className="cart-icon" />
+                  {cartCount >= 0 && (
+  <span
+    className={`cart-badge ${cartCount === 0 ? 'empty-cart-badge' : 'non-empty-cart-badge'}`}
+  >
+    {cartCount}
+  </span>
+)}
+                </NavLink>
+              )}
+              <button className="menu-toggle-button" onClick={toggleMenu}>
+                ☰
+              </button>
+            </div>
+          </div>
           <ul className={`navbar-mobile-dropdown ${menuOpen ? 'open' : ''}`}>
             <li className="navbar-item">
-              <NavLink to="/" onClick={toggleMenu} activeClassName="active">Home</NavLink>
+              <NavLink to="/" onClick={toggleMenu}>Home</NavLink>
             </li>
             <li className="navbar-item">
-              <NavLink to="/personal-area" onClick={toggleMenu} activeClassName="active">Profilo</NavLink>
+              <NavLink to="/personal-area" onClick={toggleMenu}>Profilo</NavLink>
             </li>
             <li className="navbar-item">
-              <NavLink to="/companies-by-category" onClick={toggleMenu} activeClassName="active">Categorie</NavLink>
+              <NavLink to="/companies-by-category" onClick={toggleMenu}>Categorie</NavLink>
             </li>
 
+            {/* Menu per gli amministratori */}
             {userData?.role === 'admin' && (
               <li className="navbar-item">
-                <NavLink to="/admin-dashboard" onClick={toggleMenu} activeClassName="active">Admin</NavLink>
+                <NavLink to="/admin-dashboard" onClick={toggleMenu}>Admin</NavLink>
               </li>
             )}
 
+            {/* Menu per le aziende approvate */}
             {userData?.role === 'company' && userData?.status === 'approved' && (
               <>
                 <li className="navbar-item">
-                  <NavLink to="/sell-product" onClick={toggleMenu} activeClassName="active">Vendi</NavLink>
+                  <NavLink to="/sell-product" onClick={toggleMenu}>Vendi</NavLink>
                 </li>
                 <li className="navbar-item">
-                  <NavLink to="/received-orders" onClick={toggleMenu} activeClassName="active">Ordini</NavLink>
+                  <NavLink to="/received-orders" onClick={toggleMenu}>Ordini</NavLink>
                 </li>
               </>
             )}
 
+            {/* Menu per gli utenti */}
             {userData?.role === 'user' && (
               <li className="navbar-item">
-                <NavLink to="/orders" onClick={toggleMenu} activeClassName="active">Ordini</NavLink>
+                <NavLink to="/orders" onClick={toggleMenu}>Ordini</NavLink>
               </li>
             )}
 
-            <li className="navbar-item">
-              {currentUser ? (
+            {/* Logout/Login */}
+            {currentUser ? (
+              <li className="navbar-item">
                 <button onClick={() => { handleLogout(); toggleMenu(); }} className="logout-button">Logout</button>
-              ) : (
-                <NavLink to="/login" onClick={toggleMenu} activeClassName="active">Login</NavLink>
-              )}
-            </li>
+              </li>
+            ) : (
+              <li className="navbar-item">
+                <NavLink to="/login" onClick={toggleMenu}>Login</NavLink>
+              </li>
+            )}
           </ul>
-        </div>
+        </>
       ) : (
         <>
           <div className="navbar-menu-container">
             <ul className="navbar-menu">
-              <li className="navbar-item"><NavLink to="/" activeClassName="active">Home</NavLink></li>
-              <li className="navbar-item"><NavLink to="/personal-area" activeClassName="active">Profilo</NavLink></li>
-              <li className="navbar-item"><NavLink to="/companies-by-category" activeClassName="active">Categorie</NavLink></li>
+              <li className="navbar-item"><NavLink to="/">Home</NavLink></li>
+
+              {/* Dropdown Profilo tra Home e Categorie */}
+              <li className="navbar-item profile-dropdown">
+                <button className="profile-button">Profilo</button>
+                <ul className="dropdown-menu">
+                <li><button onClick={() => handleNavigate('/personal-area')} className='ap-button'>Area personale</button></li>
+                  <li>
+                    {currentUser ? (
+                      <button onClick={handleLogout} className="logout-button">Logout</button>
+                    ) : (
+                      <NavLink to="/login">Login</NavLink>
+                    )}
+                  </li>
+                </ul>
+              </li>
+
+              <li className="navbar-item"><NavLink to="/companies-by-category">Categorie</NavLink></li>
 
               {userData?.role === 'admin' && (
-                <li className="navbar-item"><NavLink to="/admin-dashboard" activeClassName="active">Admin</NavLink></li>
+                <li className="navbar-item"><NavLink to="/admin-dashboard">Admin</NavLink></li>
               )}
-
               {userData?.role === 'company' && userData?.status === 'approved' && (
                 <>
-                  <li className="navbar-item"><NavLink to="/sell-product" activeClassName="active">Vendi</NavLink></li>
-                  <li className="navbar-item"><NavLink to="/received-orders" activeClassName="active">Ordini</NavLink></li>
+                  <li className="navbar-item"><NavLink to="/sell-product">Vendi</NavLink></li>
+                  <li className="navbar-item"><NavLink to="/received-orders">Ordini</NavLink></li>
                 </>
               )}
-
               {userData?.role === 'user' && (
-                <li className="navbar-item"><NavLink to="/orders" activeClassName="active">Ordini</NavLink></li>
+                <li className="navbar-item"><NavLink to="/orders">Ordini</NavLink></li>
               )}
             </ul>
           </div>
-          <div className="navbar-logout-container">
-            {currentUser ? (
-              <button onClick={handleLogout} className="logout-button">Logout</button>
-            ) : (
-              <NavLink to="/login" className="login-button-navbar">Login</NavLink>
+
+          {/* Pulsante Carrello all'estrema destra con il badge */}
+          <div className="navbar-cart-container">
+            {/* Mostra il pulsante carrello solo se l'utente non è loggato o ha il ruolo "user" */}
+            {(!currentUser || userData?.role === 'user') && (
+              <NavLink to="/cart">
+                <img src={cartIcon} alt="Cart" className="cart-icon" />
+                {cartCount >= 0 && (
+  <span
+    className={`cart-badge ${cartCount === 0 ? 'empty-cart-badge' : 'non-empty-cart-badge'}`}
+  >
+    {cartCount}
+  </span>
+)}
+              </NavLink>
             )}
           </div>
         </>

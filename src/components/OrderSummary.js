@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { jsPDF } from 'jspdf';
 import QRCode from 'qrcode.react';
-import '../OrderSummary.css'; // File CSS per lo styling
+import '../OrderSummary.css';
 
 function OrderSummary() {
   const location = useLocation();
@@ -12,19 +12,21 @@ function OrderSummary() {
     const doc = new jsPDF();
     doc.text(`Riepilogo dell'ordine`, 10, 10);
     doc.text(`Numero d'ordine: ${orderData.orderNumber}`, 10, 20);
-    doc.text(`Prodotto: ${orderData.productTitle}`, 10, 30);
-    doc.text(`Prezzo: €${orderData.price}`, 10, 40);
+    orderData.multipleOrders.forEach((order, index) => {
+      doc.text(`Prodotto: ${order.productTitle}`, 10, 30 + (index * 10));
+      doc.text(`Prezzo: €${order.price}`, 10, 40 + (index * 10));
+    });
     doc.save(`riepilogo-ordine-${orderData.orderNumber}.pdf`);
   };
 
-  const handleDownloadQRCode = () => {
-    const canvas = document.getElementById('qrcode');
+  const handleDownloadQRCode = (qrCode) => {
+    const canvas = document.getElementById(qrCode);
     const pngUrl = canvas
       .toDataURL('image/png')
       .replace('image/png', 'image/octet-stream');
     const downloadLink = document.createElement('a');
     downloadLink.href = pngUrl;
-    downloadLink.download = `qrcode-${orderData.qrCode}.png`;
+    downloadLink.download = `qrcode-${qrCode}.png`;
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
@@ -35,15 +37,16 @@ function OrderSummary() {
       <h1>Riepilogo dell'ordine</h1>
       <div className="order-summary-box">
         <p><strong>Numero d'ordine:</strong> {orderData.orderNumber}</p>
-        <p><strong>Prodotto:</strong> {orderData.productTitle}</p>
-        <p><strong>Prezzo:</strong> €{orderData.price}</p>
-        <div className="qrcode-section">
-          <h3>Codice QR:</h3>
-          <QRCode id="qrcode" value={orderData.qrCode} size={256} />
-        </div>
+        {orderData.multipleOrders.map((order) => (
+          <div key={order.qrCode} className="qrcode-section">
+            <h3>Prodotto: {order.productTitle}</h3>
+            <p>Prezzo: €{order.price}</p>
+            <QRCode id={order.qrCode} value={order.qrCode} size={256} />
+            <button onClick={() => handleDownloadQRCode(order.qrCode)}>Scarica QR Code</button>
+          </div>
+        ))}
       </div>
       <div className="order-summary-actions">
-        <button onClick={handleDownloadQRCode}>Scarica QR Code</button>
         <button onClick={handleDownloadPDF}>Scarica PDF</button>
       </div>
     </div>

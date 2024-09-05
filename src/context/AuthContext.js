@@ -13,6 +13,12 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [cartCount, setCartCount] = useState(0); // Nuovo stato per il numero di prodotti nel carrello
+
+  // Funzione per aggiornare il contatore dei prodotti nel carrello
+  const updateCartCount = (count) => {
+    setCartCount(count);
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -24,7 +30,6 @@ export function AuthProvider({ children }) {
           const userDocSnap = await getDoc(userDocRef);
 
           if (userDocSnap.exists()) {
-            // L'utente esiste nella collezione 'users'
             const userDataFromFirestore = userDocSnap.data();
             setUserData(userDataFromFirestore);
           } else {
@@ -33,7 +38,6 @@ export function AuthProvider({ children }) {
             const companyRequestSnap = await getDoc(companyRequestRef);
 
             if (companyRequestSnap.exists()) {
-              // L'utente esiste nella collezione 'companyRequests'
               const requestData = companyRequestSnap.data();
               setUserData({
                 ...requestData,
@@ -44,12 +48,25 @@ export function AuthProvider({ children }) {
               setUserData(null);
             }
           }
+
+          // Recupera il numero di prodotti nel carrello
+          const cartDocRef = doc(db, 'carts', user.uid);
+          const cartDocSnap = await getDoc(cartDocRef);
+          if (cartDocSnap.exists()) {
+            const cartData = cartDocSnap.data();
+            setCartCount(cartData.products.length); // Imposta il numero di prodotti nel carrello
+          } else {
+            setCartCount(0); // Nessun prodotto nel carrello
+          }
+
         } catch (error) {
           console.error("Errore durante il recupero dei dati:", error);
           setUserData(null);
+          setCartCount(0); // Resetta il contatore del carrello in caso di errore
         }
       } else {
         setUserData(null);
+        setCartCount(0); // Resetta il contatore del carrello quando l'utente non è loggato
       }
       setLoading(false);
     });
@@ -60,6 +77,8 @@ export function AuthProvider({ children }) {
   const value = {
     currentUser,
     userData,
+    cartCount, // Esporta il numero di prodotti nel carrello
+    updateCartCount, // Esporta la funzione per aggiornare il contatore del carrello
   };
 
   return (
