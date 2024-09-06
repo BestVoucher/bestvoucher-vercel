@@ -5,10 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
   box-sizing: border-box;
-  z-index: 1000;
-  position: relative; /* Aggiunto per gestire il dropdown in posizione assoluta */
 }
 
 /* Contenitore per logo */
@@ -24,12 +21,14 @@
   flex: 1; /* Occupa tutto lo spazio disponibile tra il logo e il carrello/toggle */
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 /* Contenitore del carrello e toggle menu */
 .navbar-mobile-right {
   display: flex;
   align-items: center;
+  width: auto;
 }
 
 /* Stile per il carrello */
@@ -55,7 +54,6 @@
   position: absolute;
   top: -5px;  /* Sposta il badge leggermente verso l'alto */
   right: -5px;  /* Sposta il badge leggermente verso destra */
-  color: white;
   font-size: 12px;
   padding: 2px 6px;
   border-radius: 50%;
@@ -216,20 +214,9 @@
     margin-right: 10px; /* Aggiungi spazio tra il carrello e il toggle menu */
   }
 
-  .navbar-logo-container {
-    flex: 0 0 50px; /* Definiamo una larghezza fissa per il logo */
-  }
-
   .navbar-page-title {
-    flex: 1; /* Occupiamo tutto lo spazio centrale per il titolo */
-    text-align: center;
     margin-left: 10px; /* Evita che sia troppo vicino al logo */
     margin-right: 10px; /* Evita che sia troppo vicino al carrello/toggle */
-  }
-
-  .navbar-mobile-right {
-    display: flex;
-    align-items: center;
   }
 
   .navbar-menu-container {
