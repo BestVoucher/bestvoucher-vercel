@@ -64,11 +64,11 @@ function Navbar() {
     };
   }, []);
 
-// Definizione della funzione handleNavigate
-const handleNavigate = (path) => {
-  navigate(path);
-  setMenuOpen(false); // Chiude il menu mobile
-};
+  // Definizione della funzione handleNavigate
+  const handleNavigate = (path) => {
+    navigate(path);
+    setMenuOpen(false); // Chiude il menu mobile
+  };
 
   const handleLogout = async () => {
     try {
@@ -98,7 +98,7 @@ const handleNavigate = (path) => {
             <div className="navbar-mobile-right">
               {/* Mostra il pulsante carrello solo se l'utente non è loggato o ha il ruolo "user" */}
               {(!currentUser || userData?.role === 'user') && (
-                <NavLink to="/cart">
+                <NavLink to="/cart" className="cart-link">
                   <img src={cartIcon} alt="Cart" className="cart-icon" />
                   {cartCount >= 0 && (
                     <span className={`cart-badge ${cartCount === 0 ? 'empty-cart-badge' : 'non-empty-cart-badge'}`}>{cartCount}</span>
@@ -201,7 +201,7 @@ const handleNavigate = (path) => {
           <div className="navbar-cart-container">
             {/* Mostra il pulsante carrello solo se l'utente non è loggato o ha il ruolo "user" */}
             {(!currentUser || userData?.role === 'user') && (
-              <NavLink to="/cart">
+              <NavLink to="/cart" className="cart-link">
                 <img src={cartIcon} alt="Cart" className="cart-icon" />
                 {cartCount >= 0 && (
                 <span className={`cart-badge ${cartCount === 0 ? 'empty-cart-badge' : 'non-empty-cart-badge'}`}>{cartCount}</span>)}

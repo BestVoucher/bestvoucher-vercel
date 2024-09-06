@@ -39,6 +39,13 @@
   position: relative; /* Necessario per posizionare correttamente il badge */
 }
 
+/* Stile per il link del carrello (aggiunto per centraggio migliore) */
+.cart-link {
+  position: relative;
+  display: inline-block;
+}
+
+/* Stile per l'icona del carrello */
 .cart-icon {
   width: 30px;
   height: auto;
@@ -53,22 +60,22 @@
 /* Badge del carrello */
 .cart-badge {
   position: absolute;
-  top: -5px;  /* Sposta il badge leggermente verso l'alto */
-  right: -5px;  /* Sposta il badge leggermente verso destra */
+  top: -10px;  /* Aggiustato per stare meglio sopra l'icona */
+  right: -10px;  /* Posizionato a destra dell'icona */
   font-size: 12px;
   padding: 2px 6px;
   border-radius: 50%;
   font-weight: bold;
+  color: white;
 }
 
+/* Colori distinti per badge quando carrello è vuoto o pieno */
 .empty-cart-badge {
   background-color: red; /* Colore per quando il carrello è vuoto */
-  color: white;
 }
 
 .non-empty-cart-badge {
   background-color: green; /* Colore per quando c'è almeno un prodotto */
-  color: white;
 }
 
 /* Pulsante toggle del menu */
@@ -78,7 +85,9 @@
   border: none;
   color: white;
   cursor: pointer;
-  margin-left: 15px;
+  margin-left: 0px;  /* Riduci il margine a sinistra */
+  margin-right: 5px; /* Riduci lo spazio a destra */
+  padding: 0px; /* Rimuovi il padding aggiuntivo */
 }
 
 /* Dropdown profilo */
@@ -207,18 +216,9 @@
   }
 
   /* Regola la posizione del badge del carrello */
-  .navbar-cart-container {
-    margin-right: 15px; /* Aggiungi spazio tra il carrello e il toggle menu */
-  }
-
-  /* Badge del carrello */
   .cart-badge {
-    top: 10px;  /* Abbassa ulteriormente il badge per posizionarlo correttamente */
-    right: 50px; /* Correggi lo spostamento a destra per non sovrapporre al menu */
-    font-size: 12px;
-    padding: 2px 6px;
-    border-radius: 50%;
-    font-weight: bold;
+    top: -5px; /* Aggiustato per schermi piccoli */
+    right: -5px; /* Aggiustato per schermi piccoli */
   }
 
   .menu-toggle-button {
