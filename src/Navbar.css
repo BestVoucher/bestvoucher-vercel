@@ -27,8 +27,9 @@
 /* Contenitore del carrello e toggle menu */
 .navbar-mobile-right {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  max-width: auto;
+  width: auto;
 }
 
 /* Stile per il carrello */
@@ -223,6 +224,7 @@
   .menu-toggle-button {
     padding-left: 0px;
     margin-left: 20px;
+    margin-right: 0px;
   }
 
   /* Regola il titolo per centrarlo */
