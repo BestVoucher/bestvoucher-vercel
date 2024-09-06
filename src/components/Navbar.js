@@ -101,12 +101,8 @@ const handleNavigate = (path) => {
                 <NavLink to="/cart">
                   <img src={cartIcon} alt="Cart" className="cart-icon" />
                   {cartCount >= 0 && (
-  <span
-    className={`cart-badge ${cartCount === 0 ? 'empty-cart-badge' : 'non-empty-cart-badge'}`}
-  >
-    {cartCount}
-  </span>
-)}
+                    <span className={`cart-badge ${cartCount === 0 ? 'empty-cart-badge' : 'non-empty-cart-badge'}`}>{cartCount}</span>
+                  )}
                 </NavLink>
               )}
               <button className="menu-toggle-button" onClick={toggleMenu}>
