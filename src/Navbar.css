@@ -196,7 +196,7 @@
   color: #ff9800;
 }
 
-/* Navbar per dispositivi mobili */
+/* Badge del carrello su dispositivi mobili */
 @media (max-width: 768px) {
   .navbar-mobile {
     display: flex;
@@ -205,17 +205,26 @@
     width: 100%;
   }
 
-  .cart-badge {
-    top: 10px;  /* Sposta il badge leggermente verso l'alto */
-    right: 50px;  /* Sposta il badge leggermente verso destra */
+  .navbar-cart-container {
+    margin-right: 15px; /* Aggiungi spazio tra il carrello e il toggle menu */
+    position: relative; /* Mantieni il badge relativo al container */
   }
 
-  .navbar-cart-container {
-    margin-right: 10px; /* Aggiungi spazio tra il carrello e il toggle menu */
+  /* Regola la posizione del badge su mobile */
+  .cart-badge {
+    top: -8px;  /* Aggiusta il valore per abbassare il badge */
+    right: 0px;  /* Allinea correttamente il badge a destra dell'icona */
+    font-size: 12px;  /* Mantieni la dimensione del font */
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: bold;
+    background-color: red;
   }
 
   .navbar-page-title {
-    margin-left: 10px; /* Evita che sia troppo vicino al logo */
+    flex: 1; /* Assicurati che occupi tutto lo spazio centrale per il titolo */
+    text-align: center;
+    margin-left: 10px; /* Evita che il titolo sia troppo vicino al logo */
     margin-right: 10px; /* Evita che sia troppo vicino al carrello/toggle */
   }
 
