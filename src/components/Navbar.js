@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
@@ -13,7 +13,6 @@ function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Funzione per ottenere il titolo della pagina attuale
   const getCurrentPageTitle = () => {
     const path = window.location.pathname;
 
@@ -26,26 +25,6 @@ function Navbar() {
         return 'Categorie';
       case path === '/cart':
         return 'Carrello';
-      case path === '/terms':
-        return 'Termini';
-      case path === '/login':
-        return 'Accedi';
-      case path === '/register':
-        return 'Registrati';
-      case path === '/faq':
-        return 'FAQ';
-      case path === '/admin-dashboard':
-        return 'Admin';
-      case path === '/orders':
-        return 'Ordini';
-      case path === '/sell-product':
-        return 'Vendi';
-      case path === '/received-orders':
-        return 'Ordini';
-      case /^\/product\/.+$/.test(path):  // Verifica se il percorso inizia con "/product/"
-        return 'Prodotto';
-      case /^\/company\/.+$/.test(path):  // Verifica se il percorso inizia con "/company/"
-        return 'Azienda';
       default:
         return 'Pagina';
     }
@@ -56,7 +35,7 @@ function Navbar() {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    handleResize(); // Check the initial size
+    handleResize();
     window.addEventListener('resize', handleResize);
 
     return () => {
@@ -64,16 +43,15 @@ function Navbar() {
     };
   }, []);
 
-  // Definizione della funzione handleNavigate
   const handleNavigate = (path) => {
     navigate(path);
-    setMenuOpen(false); // Chiude il menu mobile
+    setMenuOpen(false);
   };
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate('/'); // Reindirizza alla homepage dopo il logout
+      navigate('/');
     } catch (error) {
       console.error('Errore durante il logout:', error);
     }
@@ -86,24 +64,25 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-logo-container">
-        <NavLink to="/">
+        <button className="logo-button" onClick={() => handleNavigate('/')}>
           <img src={logo} alt="Home" className="navbar-logo" />
-        </NavLink>
+        </button>
       </div>
 
       {isMobile ? (
         <>
           <div className="navbar-mobile">
-            <span className="navbar-page-title">{getCurrentPageTitle()}</span> {/* Titolo della pagina al centro */}
+            <span className="navbar-page-title">{getCurrentPageTitle()}</span>
             <div className="navbar-mobile-right">
-              {/* Mostra il pulsante carrello solo se l'utente non è loggato o ha il ruolo "user" */}
               {(!currentUser || userData?.role === 'user') && (
-                <NavLink to="/cart" className="cart-link">
+                <button className="cart-link" onClick={() => handleNavigate('/cart')}>
                   <img src={cartIcon} alt="Cart" className="cart-icon" />
                   {cartCount >= 0 && (
-                    <span className={`cart-badge ${cartCount === 0 ? 'empty-cart-badge' : 'non-empty-cart-badge'}`}>{cartCount}</span>
+                    <span className={`cart-badge ${cartCount === 0 ? 'empty-cart-badge' : 'non-empty-cart-badge'}`}>
+                      {cartCount}
+                    </span>
                   )}
-                </NavLink>
+                </button>
               )}
               <button className="menu-toggle-button" onClick={toggleMenu}>
                 ☰
@@ -112,49 +91,45 @@ function Navbar() {
           </div>
           <ul className={`navbar-mobile-dropdown ${menuOpen ? 'open' : ''}`}>
             <li className="navbar-item">
-              <NavLink to="/" onClick={toggleMenu}>Home</NavLink>
+              <button onClick={() => handleNavigate('/')}>Home</button>
             </li>
             <li className="navbar-item">
-              <NavLink to="/personal-area" onClick={toggleMenu}>Profilo</NavLink>
+              <button onClick={() => handleNavigate('/personal-area')}>Profilo</button>
             </li>
             <li className="navbar-item">
-              <NavLink to="/companies-by-category" onClick={toggleMenu}>Categorie</NavLink>
+              <button onClick={() => handleNavigate('/companies-by-category')}>Categorie</button>
             </li>
 
-            {/* Menu per gli amministratori */}
             {userData?.role === 'admin' && (
               <li className="navbar-item">
-                <NavLink to="/admin-dashboard" onClick={toggleMenu}>Admin</NavLink>
+                <button onClick={() => handleNavigate('/admin-dashboard')}>Admin</button>
               </li>
             )}
 
-            {/* Menu per le aziende approvate */}
             {userData?.role === 'company' && userData?.status === 'approved' && (
               <>
                 <li className="navbar-item">
-                  <NavLink to="/sell-product" onClick={toggleMenu}>Vendi</NavLink>
+                  <button onClick={() => handleNavigate('/sell-product')}>Vendi</button>
                 </li>
                 <li className="navbar-item">
-                  <NavLink to="/received-orders" onClick={toggleMenu}>Ordini</NavLink>
+                  <button onClick={() => handleNavigate('/received-orders')}>Ordini</button>
                 </li>
               </>
             )}
 
-            {/* Menu per gli utenti */}
             {userData?.role === 'user' && (
               <li className="navbar-item">
-                <NavLink to="/orders" onClick={toggleMenu}>Ordini</NavLink>
+                <button onClick={() => handleNavigate('/orders')}>Ordini</button>
               </li>
             )}
 
-            {/* Logout/Login */}
             {currentUser ? (
               <li className="navbar-item">
-                <button onClick={() => { handleLogout(); toggleMenu(); }} className="logout-button">Logout</button>
+                <button onClick={handleLogout} className="dp-logout-button">Logout</button>
               </li>
             ) : (
               <li className="navbar-item">
-                <NavLink to="/login" onClick={toggleMenu}>Login</NavLink>
+                <button onClick={() => handleNavigate('/login')} className='dp-login-button'>Login</button>
               </li>
             )}
           </ul>
@@ -163,49 +138,46 @@ function Navbar() {
         <>
           <div className="navbar-menu-container">
             <ul className="navbar-menu">
-              <li className="navbar-item"><NavLink to="/">Home</NavLink></li>
+              <li className="navbar-item"><button onClick={() => handleNavigate('/')}>Home</button></li>
 
-              {/* Dropdown Profilo tra Home e Categorie */}
               <li className="navbar-item profile-dropdown">
                 <button className="profile-button">Profilo</button>
                 <ul className="dropdown-menu">
-                <li><button onClick={() => handleNavigate('/personal-area')} className='ap-button'>Area personale</button></li>
+                  <li><button onClick={() => handleNavigate('/personal-area')} className='ap-button'>Area personale</button></li>
                   <li>
                     {currentUser ? (
                       <button onClick={handleLogout} className="logout-button">Logout</button>
                     ) : (
-                      <NavLink to="/login">Login</NavLink>
+                      <button onClick={() => handleNavigate('/login')} className='profile-login-button'>Login</button>
                     )}
                   </li>
                 </ul>
               </li>
 
-              <li className="navbar-item"><NavLink to="/companies-by-category">Categorie</NavLink></li>
+              <li className="navbar-item"><button onClick={() => handleNavigate('/companies-by-category')}>Categorie</button></li>
 
               {userData?.role === 'admin' && (
-                <li className="navbar-item"><NavLink to="/admin-dashboard">Admin</NavLink></li>
+                <li className="navbar-item"><button onClick={() => handleNavigate('/admin-dashboard')}>Admin</button></li>
               )}
               {userData?.role === 'company' && userData?.status === 'approved' && (
                 <>
-                  <li className="navbar-item"><NavLink to="/sell-product">Vendi</NavLink></li>
-                  <li className="navbar-item"><NavLink to="/received-orders">Ordini</NavLink></li>
+                  <li className="navbar-item"><button onClick={() => handleNavigate('/sell-product')}>Vendi</button></li>
+                  <li className="navbar-item"><button onClick={() => handleNavigate('/received-orders')}>Ordini</button></li>
                 </>
               )}
               {userData?.role === 'user' && (
-                <li className="navbar-item"><NavLink to="/orders">Ordini</NavLink></li>
+                <li className="navbar-item"><button onClick={() => handleNavigate('/orders')}>Ordini</button></li>
               )}
             </ul>
           </div>
 
-          {/* Pulsante Carrello all'estrema destra con il badge */}
           <div className="navbar-cart-container">
-            {/* Mostra il pulsante carrello solo se l'utente non è loggato o ha il ruolo "user" */}
             {(!currentUser || userData?.role === 'user') && (
-              <NavLink to="/cart" className="cart-link">
+              <button className="cart-link" onClick={() => handleNavigate('/cart')}>
                 <img src={cartIcon} alt="Cart" className="cart-icon" />
                 {cartCount >= 0 && (
                 <span className={`cart-badge ${cartCount === 0 ? 'empty-cart-badge' : 'non-empty-cart-badge'}`}>{cartCount}</span>)}
-              </NavLink>
+              </button>
             )}
           </div>
         </>
