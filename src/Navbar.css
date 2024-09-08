@@ -288,7 +288,7 @@
   /* Regola la posizione del badge del carrello */
   .cart-badge {
     top: -5px; /* Aggiustato per schermi piccoli */
-    right: -5px; /* Aggiustato per schermi piccoli */
+    right: -3px; /* Aggiustato per schermi piccoli */
   }
 
   .menu-toggle-button {
