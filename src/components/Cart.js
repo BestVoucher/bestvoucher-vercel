@@ -67,7 +67,6 @@ function Cart() {
     fetchCartItems();
   }, [currentUser, updateCartCount]);
 
-  // Funzione aggiornata per gestire la modifica della quantità
   const handleQuantityChange = async (productId, newQuantity) => {
     if (!currentUser) return;
 
@@ -80,12 +79,9 @@ function Cart() {
         let updatedProducts = cartData.products;
 
         if (newQuantity === 0) {
-          // Se la quantità è 0, rimuovi l'articolo dal carrello
           updatedProducts = updatedProducts.filter(item => item.id !== productId);
         } else {
-          // Se la quantità è maggiore di 0, aggiorna la quantità
           const productInCart = updatedProducts.find(item => item.id === productId);
-
           if (productInCart) {
             updatedProducts = updatedProducts.filter(item => item.id !== productId);
             for (let i = 0; i < newQuantity; i++) {
@@ -134,9 +130,19 @@ function Cart() {
 
         await updateDoc(cartDocRef, { products: updatedProducts });
 
-        setCartItems(updatedProducts);
+        const groupedProducts = updatedProducts.reduce((acc, product) => {
+          const existingProduct = acc.find(item => item.id === product.id);
+          if (existingProduct) {
+            existingProduct.quantity += 1;
+          } else {
+            acc.push({ ...product, quantity: 1 });
+          }
+          return acc;
+        }, []);
 
-        const newTotal = updatedProducts.reduce((sum, item) => sum + parseFloat(item.price), 0);
+        setCartItems(groupedProducts);
+
+        const newTotal = groupedProducts.reduce((sum, item) => sum + item.quantity * parseFloat(item.price), 0);
         setTotalPrice(newTotal.toFixed(2));
         updateCartCount(updatedProducts.length);
       }
@@ -173,9 +179,8 @@ function Cart() {
     try {
       const orderCollection = collection(db, 'multipleorders');
       for (const order of multipleOrders) {
-        for (let i = 0; i < order.quantity; i++) { // Salva il prodotto secondo la quantità
-          await addDoc(orderCollection, order);
-        }
+        // Aggiunge il documento solo una volta per ogni quantità specificata, senza il ciclo for interno
+        await addDoc(orderCollection, order);
       }
     } catch (error) {
       console.error("Errore durante la registrazione degli ordini su Firestore:", error);
@@ -196,24 +201,37 @@ function Cart() {
   
       await saveOrderToFirestore(orderData);
   
-      // Creazione degli ordini multipli tenendo conto della quantità
-      const multipleOrders = cartItems.flatMap((item) => {
-        if (!item.id || !item.title || !item.price) {
-          throw new Error("Il prodotto nel carrello contiene dati mancanti o non validi.");
-        }
+      const multipleOrdersWithQRCodes = await Promise.all(
+        cartItems.map(async (item) => {
+          const qrCodes = Array.from({ length: item.quantity }, () => ({
+            code: `QR_${Math.random().toString(36).substr(2, 9)}`,
+            productDocName: item.id,
+            userId: currentUser.uid,
+            createdAt: new Date().toISOString(),
+          }));
   
-        return Array(item.quantity).fill(null).map(() => ({
-          orderNumber,
-          productDocName: item.id,
-          productTitle: item.title,
-          price: item.price,
-          qrCode: generateRandomCode(),
-          createdAt: new Date().toISOString(),
-        }));
-      });
+          await Promise.all(qrCodes.map((qrData) => addDoc(collection(db, 'newqrcodes'), qrData)));
   
-      await saveMultipleOrdersToFirestore(multipleOrders);
-      navigate(`/order-summary/${orderNumber}`, { state: { ...orderData, multipleOrders } });
+          return {
+            ...item,
+            qrCodes: qrCodes.map((qr) => qr.code),
+            productTitle: item.title,
+          };
+        })
+      );
+  
+      await saveMultipleOrdersToFirestore(multipleOrdersWithQRCodes);
+  
+      // Svuota il carrello su Firestore
+      const cartDocRef = doc(db, 'carts', currentUser.uid);
+      await updateDoc(cartDocRef, { products: [] }); // Imposta il carrello come vuoto su Firestore
+  
+      // Svuota il carrello localmente
+      setCartItems([]);
+      setTotalPrice(0);
+      updateCartCount(0);
+  
+      navigate(`/order-summary/${orderNumber}`, { state: { ...orderData, multipleOrders: multipleOrdersWithQRCodes } });
     } catch (error) {
       setErrorMessage("Si è verificato un errore durante la registrazione dell'ordine.");
     }
@@ -265,34 +283,33 @@ function Cart() {
               {totalPrice !== null && (
                 <div className="paypal-buttons-container">
                   <PayPalButtons
-  fundingSource={FUNDING.PAYPAL}
-  style={{ layout: "vertical" }}
-  createOrder={(data, actions) => {
-    // Calcola il totale al momento della creazione dell'ordine
-    const currentTotal = totalPrice.toString();
-    return actions.order.create({
-      purchase_units: [{
-        amount: {
-          value: currentTotal,
-          currency_code: "EUR"
-        }
-      }]
-    });
-  }}
-  onApprove={async (data, actions) => {
-    try {
-      const details = await actions.order.capture();
-      await handleCheckout(details);
-    } catch (err) {
-      console.error('Errore durante il pagamento:', err);
-      setErrorMessage('Si è verificato un errore durante il pagamento.');
-    }
-  }}
-  onError={(err) => {
-    console.error('Errore durante il pagamento:', err);
-    setErrorMessage('Si è verificato un errore durante il pagamento.');
-  }}
-/>
+                    key={totalPrice} // Usa totalPrice come key per forzare il re-render
+                    fundingSource={FUNDING.PAYPAL}
+                    style={{ layout: "vertical" }}
+                    createOrder={(data, actions) => {
+                      return actions.order.create({
+                        purchase_units: [{
+                          amount: {
+                            value: totalPrice,
+                            currency_code: "EUR"
+                          }
+                        }]
+                      });
+                    }}
+                    onApprove={async (data, actions) => {
+                      try {
+                        const details = await actions.order.capture();
+                        await handleCheckout(details);
+                      } catch (err) {
+                        console.error('Errore durante il pagamento:', err);
+                        setErrorMessage('Si è verificato un errore durante il pagamento.');
+                      }
+                    }}
+                    onError={(err) => {
+                      console.error('Errore durante il pagamento:', err);
+                      setErrorMessage('Si è verificato un errore durante il pagamento.');
+                    }}
+                  />
                 </div>
               )}
             </PayPalScriptProvider>
