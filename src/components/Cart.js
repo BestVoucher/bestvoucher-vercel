@@ -173,7 +173,9 @@ function Cart() {
     try {
       const orderCollection = collection(db, 'multipleorders');
       for (const order of multipleOrders) {
-        await addDoc(orderCollection, order);
+        for (let i = 0; i < order.quantity; i++) { // Salva il prodotto secondo la quantità
+          await addDoc(orderCollection, order);
+        }
       }
     } catch (error) {
       console.error("Errore durante la registrazione degli ordini su Firestore:", error);
@@ -191,24 +193,25 @@ function Cart() {
         userId: currentUser.uid,
         createdAt: new Date().toISOString(),
       };
-
+  
       await saveOrderToFirestore(orderData);
-
-      const multipleOrders = cartItems.map((item) => {
+  
+      // Creazione degli ordini multipli tenendo conto della quantità
+      const multipleOrders = cartItems.flatMap((item) => {
         if (!item.id || !item.title || !item.price) {
           throw new Error("Il prodotto nel carrello contiene dati mancanti o non validi.");
         }
-
-        return {
+  
+        return Array(item.quantity).fill(null).map(() => ({
           orderNumber,
           productDocName: item.id,
           productTitle: item.title,
           price: item.price,
           qrCode: generateRandomCode(),
           createdAt: new Date().toISOString(),
-        };
+        }));
       });
-
+  
       await saveMultipleOrdersToFirestore(multipleOrders);
       navigate(`/order-summary/${orderNumber}`, { state: { ...orderData, multipleOrders } });
     } catch (error) {
@@ -262,32 +265,34 @@ function Cart() {
               {totalPrice !== null && (
                 <div className="paypal-buttons-container">
                   <PayPalButtons
-                    fundingSource={FUNDING.PAYPAL}
-                    style={{ layout: "vertical" }}
-                    createOrder={(data, actions) => {
-                      return actions.order.create({
-                        purchase_units: [{
-                          amount: {
-                            value: totalPrice.toString(),
-                            currency_code: "EUR"
-                          }
-                        }]
-                      });
-                    }}
-                    onApprove={async (data, actions) => {
-                      try {
-                        const details = await actions.order.capture();
-                        await handleCheckout(details);
-                      } catch (err) {
-                        console.error('Errore durante il pagamento:', err);
-                        setErrorMessage('Si è verificato un errore durante il pagamento.');
-                      }
-                    }}
-                    onError={(err) => {
-                      console.error('Errore durante il pagamento:', err);
-                      setErrorMessage('Si è verificato un errore durante il pagamento.');
-                    }}
-                  />
+  fundingSource={FUNDING.PAYPAL}
+  style={{ layout: "vertical" }}
+  createOrder={(data, actions) => {
+    // Calcola il totale al momento della creazione dell'ordine
+    const currentTotal = totalPrice.toString();
+    return actions.order.create({
+      purchase_units: [{
+        amount: {
+          value: currentTotal,
+          currency_code: "EUR"
+        }
+      }]
+    });
+  }}
+  onApprove={async (data, actions) => {
+    try {
+      const details = await actions.order.capture();
+      await handleCheckout(details);
+    } catch (err) {
+      console.error('Errore durante il pagamento:', err);
+      setErrorMessage('Si è verificato un errore durante il pagamento.');
+    }
+  }}
+  onError={(err) => {
+    console.error('Errore durante il pagamento:', err);
+    setErrorMessage('Si è verificato un errore durante il pagamento.');
+  }}
+/>
                 </div>
               )}
             </PayPalScriptProvider>

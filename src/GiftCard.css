@@ -1,0 +1,35 @@
+.gift-card-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .gift-card-options {
+    margin-bottom: 20px;
+  }
+  
+  .gift-card-options label {
+    font-size: 1.2rem;
+    margin-right: 10px;
+  }
+  
+  select {
+    padding: 8px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .paypal-buttons-container {
+    margin-top: 20px;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 1rem;
+    margin-top: 20px;
+  }

@@ -14,6 +14,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import AdminDashboard from './components/AdminDashboard';
 import ReceivedOrders from './components/ReceivedOrders';
 import Cart from './components/Cart';
+import GiftCard from './components/GiftCard';
 import CompaniesByCategory from './components/CompaniesByCategory'; 
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
@@ -79,6 +80,15 @@ function App() {
                 element={
                   <ProtectedRoute requiredRole="user">
                     <Orders />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/gift-card"
+                element={
+                  <ProtectedRoute requiredRole="user">
+                    <GiftCard />
                   </ProtectedRoute>
                 }
               />
