@@ -98,6 +98,10 @@
   font-size: 1.1em;
 }
 
+.product-detail .messaggio-accedi {
+  color: orange;
+}
+
 /* Media query per dispositivi mobili */
 @media (max-width: 768px) {
   .product-detail {

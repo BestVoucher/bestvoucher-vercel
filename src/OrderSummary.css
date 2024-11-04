@@ -1,60 +1,136 @@
 .order-summary-page {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.order-summary-box {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Per mantenere la larghezza in tutte le dimensioni dello schermo */
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.order-summary-box p {
+  font-size: 18px;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.order-item {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  width: 90%; /* Imposta la larghezza delle card al 90% per lasciare spazio ai margini */
+  max-width: 500px;
+  flex-direction: column; /* Disposizione verticale del contenuto */
+  text-align: center;
+}
+
+.order-item p {
+  margin: 5px 0;
+}
+
+.qrcode-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Contenitore per centrare il QR code e il pulsante di navigazione nello slideshow */
+.qrcode-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.qr-slideshow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.qr-slideshow-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.qr-slideshow-controls button {
+  background-color: #FF8C00;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.qr-slideshow-controls button:hover {
+  background-color: #e07a00;
+}
+
+/* Stile per il QR code con colore arancione */
+.qr-code {
+  margin-bottom: 10px;
+}
+
+/* Bottone per scaricare la fattura */
+.download-invoice-button {
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.download-invoice-button:hover {
+  background-color: #484848;
+}
+
+@media (max-width: 600px) {
+  .order-header {
+    flex-direction: column;
   }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
+
+  .order-header p, .download-invoice-button {
+    margin: 5px 0;
   }
-  
-  .order-summary-box {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+
+  .order-item {
+    width: 100%; /* Per utilizzare tutta la larghezza sui dispositivi mobili */
   }
-  
-  .order-summary-box p {
-    font-size: 18px;
-    margin: 10px 0;
-  }
-  
-  .qrcode-section {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .order-summary-actions {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .order-summary-actions button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .order-summary-actions button:hover {
-    background-color: #0056b3;
-  }
-  
-  @media (max-width: 600px) {
-    .order-summary-actions {
-      flex-direction: column;
-    }
-  
-    .order-summary-actions button {
-      width: 100%;
-      margin-bottom: 10px;
-    }
-  }
+}

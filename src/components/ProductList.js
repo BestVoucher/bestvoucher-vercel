@@ -37,14 +37,17 @@ function ProductList() {
         <div className="products-list">
           {products.map((product, index) => (
             <div key={index} className="product-card">
-              <Link to={`/product/${product.id}`}>
+            <Link to={`/product/${product.id}`}>
+              <div className="image-container">
                 <img src={product.imageUrl} alt={product.title} />
-                <h2>{product.title}</h2>
-                <p><strong>Prezzo di listino:</strong> € <s>{product.normalPrice}</s></p>
-                <p><strong>Prezzo BestVoucher:</strong> € {product.price}</p>
-                <p><strong>Offerto da:</strong> {product.companyName}</p>
-              </Link>
-            </div>
+                <div className="overlay">Clicca per scoprire</div>
+              </div>
+              <h2>{product.title}</h2>
+              <p><strong>Prezzo di listino:</strong> € <s>{product.normalPrice}</s></p>
+              <p><strong>Prezzo BestVoucher:</strong> € {product.price}</p>
+              <p><strong>Offerto da:</strong> {product.companyName}</p>
+            </Link>
+          </div>
           ))}
         </div>
       ) : (
