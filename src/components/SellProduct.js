@@ -46,10 +46,7 @@ function SellProduct() {
     e.preventDefault();
 
     // Controllo che il prezzo scontato sia inferiore al prezzo di listino
-    if (parseFloat(Price) >= parseFloat(normalPrice)) {
-      setMessage("Il prezzo scontato deve essere inferiore al prezzo di listino.");
-      return;
-    }
+   
 
     try {
       let imageUrl = '';
