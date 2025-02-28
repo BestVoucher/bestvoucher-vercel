@@ -121,7 +121,6 @@ function SellProduct() {
             type="number"
             id="discountedPrice"
             name="discountedPrice"
-            value={Price}
             onChange={onChange}
             placeholder="Prezzo che il cliente dovrà pagare"
             required
